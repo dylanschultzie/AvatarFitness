@@ -1,0 +1,16 @@
+Sequence Diagrams:
+	-(at least) 1 sequence diagram per use case
+	-Not all classes return a value, but if they do, make sure there is a return line with the value
+	-extra for alternate use cases
+	-
+	-
+
+Scenario:
+	-1 scenario per use case
+	-'cut and paste use case steps'
+	-in between steps, narrate function calls
+	-
+	-
+
+insert scenario and seq. immediately behind corresponding use case (use case model)
+make sure all connections within seq. are also in object model
