@@ -1,0 +1,47 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.dylan.avatarfitness.Fragments.WorkoutFragment">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/WorkoutName"
+        android:layout_gravity="center_horizontal"
+        android:editable="true"
+        android:text="Enter Workout Name (ex. Bench Press)" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/WorkoutDescription"
+        android:layout_gravity="center_horizontal"
+        android:text="Enter Workout Description (ex. 5x5 @ 185)"
+        android:editable="true" />
+
+    <Chronometer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/WorkoutLengthChrono"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Workout"
+        android:id="@+id/StartWorkoutButton"
+        android:layout_gravity="center_horizontal" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:spinnerMode="dropdown"
+        android:longClickable="false"
+        android:touchscreenBlocksFocus="false" />
+
+</LinearLayout>
+

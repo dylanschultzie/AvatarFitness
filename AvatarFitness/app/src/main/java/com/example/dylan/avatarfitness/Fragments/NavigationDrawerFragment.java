@@ -1,4 +1,4 @@
-package com.example.dylan.avatarfitness;
+package com.example.dylan.avatarfitness.Fragments;
 
 import android.support.v7.app.ActionBarActivity;
 import android.app.Activity;
@@ -21,6 +21,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.dylan.avatarfitness.R;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -102,9 +104,9 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.layout.simple_list_item_activated_1,
                 android.R.id.text1,
                 new String[]{
-                        getString(R.string.title_section1),
-                        getString(R.string.title_section2),
-                        getString(R.string.title_section3),
+                        getString(R.string.Home),
+                        getString(R.string.Workout),
+                        getString(R.string.Statistics),
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;

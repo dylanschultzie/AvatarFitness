@@ -1,26 +1,33 @@
-package com.example.dylan.avatarfitness;
+package com.example.dylan.avatarfitness.Activities;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.TextView;
+
+import com.example.dylan.avatarfitness.Fragments.AccountCreationFragment;
+import com.example.dylan.avatarfitness.Fragments.HomeFragment;
+import com.example.dylan.avatarfitness.Fragments.NavigationDrawerFragment;
+import com.example.dylan.avatarfitness.Fragments.WorkoutFragment;
+import com.example.dylan.avatarfitness.R;
+
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        HomeFragment.OnFragmentInteractionListener,
+        WorkoutFragment.OnFragmentInteractionListener,
+        AccountCreationFragment.OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -31,6 +38,7 @@ public class MainActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private HomeFragment mHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,22 +58,36 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
+        Fragment fragment;
         FragmentManager fragmentManager = getSupportFragmentManager();
+        switch(position){
+            default:
+            case 0:
+                fragment = new HomeFragment();
+                break;
+            case 1:
+                fragment = new WorkoutFragment();
+                break;
+//            case 2:
+//                fragment = new StatisticsPage();
+//                break;
+
+        }
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                .replace(R.id.container, fragment)
                 .commit();
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
-                mTitle = getString(R.string.title_section1);
+                mTitle = getString(R.string.Home);
                 break;
             case 2:
-                mTitle = getString(R.string.title_section2);
+                mTitle = getString(R.string.Workout);
                 break;
             case 3:
-                mTitle = getString(R.string.title_section3);
+                mTitle = getString(R.string.Statistics);
                 break;
         }
     }
@@ -94,7 +116,7 @@ public class MainActivity extends ActionBarActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the HomeFragment/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
@@ -104,6 +126,11 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     /**
