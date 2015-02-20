@@ -15,6 +15,10 @@ import android.widget.EditText;
 import com.example.dylan.avatarfitness.Objects.Workout;
 import com.example.dylan.avatarfitness.R;
 
+import java.text.DateFormat;
+import java.util.Date;
+
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -26,6 +30,7 @@ import com.example.dylan.avatarfitness.R;
 public class WorkoutFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private Chronometer mElapsedChrono;
+    DateFormat mDateFormat = DateFormat.getDateTimeInstance();
     private static boolean mRunningChrono;
     private long mElapsedMillis;
 
@@ -70,9 +75,10 @@ public class WorkoutFragment extends Fragment {
                     mRunningChrono = false;
                     mElapsedChrono.stop();
                     mElapsedMillis = SystemClock.elapsedRealtime() - mElapsedChrono.getBase();
-                    startTimer.setText("Start Workout");
                     mListener.SaveWorkout( new Workout( workoutName.getText().toString(),
-                            workoutDescription.getText().toString(), mElapsedMillis));
+                            workoutDescription.getText().toString(), mElapsedMillis,
+                            new Date()));
+                    startTimer.setText("Start Workout");
                 }
             }
         });
