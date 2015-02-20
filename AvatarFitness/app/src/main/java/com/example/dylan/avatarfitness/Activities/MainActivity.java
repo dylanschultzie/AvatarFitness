@@ -19,6 +19,8 @@ import com.example.dylan.avatarfitness.Fragments.AccountCreationFragment;
 import com.example.dylan.avatarfitness.Fragments.HomeFragment;
 import com.example.dylan.avatarfitness.Fragments.NavigationDrawerFragment;
 import com.example.dylan.avatarfitness.Fragments.WorkoutFragment;
+import com.example.dylan.avatarfitness.Objects.User;
+import com.example.dylan.avatarfitness.Objects.Workout;
 import com.example.dylan.avatarfitness.R;
 
 
@@ -39,6 +41,7 @@ public class MainActivity extends ActionBarActivity
      */
     private CharSequence mTitle;
     private HomeFragment mHome;
+    private User mUser = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +71,6 @@ public class MainActivity extends ActionBarActivity
             case 1:
                 fragment = new WorkoutFragment();
                 break;
-//            case 2:
-//                fragment = new StatisticsPage();
-//                break;
-
         }
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
@@ -171,6 +170,10 @@ public class MainActivity extends ActionBarActivity
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+    }
+
+    public void SaveWorkout( Workout workout ){
+        mUser.AddWorkout( workout );
     }
 
 }

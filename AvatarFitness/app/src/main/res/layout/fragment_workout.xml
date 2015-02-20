@@ -35,13 +35,5 @@
         android:id="@+id/StartWorkoutButton"
         android:layout_gravity="center_horizontal" />
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:spinnerMode="dropdown"
-        android:longClickable="false"
-        android:touchscreenBlocksFocus="false" />
-
 </LinearLayout>
 
