@@ -1,23 +1,15 @@
 package com.example.dylan.avatarfitness.Activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 
 import com.example.dylan.avatarfitness.Fragments.AccountCreationFragment;
@@ -26,15 +18,12 @@ import com.example.dylan.avatarfitness.Fragments.MapFragment;
 import com.example.dylan.avatarfitness.Fragments.NavigationDrawerFragment;
 import com.example.dylan.avatarfitness.Fragments.StatisticsFragment;
 import com.example.dylan.avatarfitness.Fragments.WorkoutFragment;
-import com.example.dylan.avatarfitness.Objects.Run;
+import com.example.dylan.avatarfitness.Managers.DatabaseManager;
 import com.example.dylan.avatarfitness.Objects.User;
-import com.example.dylan.avatarfitness.Objects.Workout;
 import com.example.dylan.avatarfitness.Objects.iWorkout;
 import com.example.dylan.avatarfitness.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
 
 
 public class MainActivity extends ActionBarActivity
@@ -45,22 +34,20 @@ public class MainActivity extends ActionBarActivity
         StatisticsFragment.OnFragmentInteractionListener,
         AccountCreationFragment.OnFragmentInteractionListener {
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
     private CharSequence mTitle;
-    private HomeFragment mHome;
-    private User mUser = new User();
+    private User mUser;
+    private DatabaseManager db = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent mIntent = getIntent();
+        int userID = mIntent.getIntExtra("userID", 0);
+        db = new DatabaseManager(this);
+        mUser = db.GetUserByID(userID);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
