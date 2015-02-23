@@ -1,7 +1,6 @@
 package com.example.dylan.avatarfitness.Objects;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Dylan on 2/16/2015.
@@ -15,7 +14,7 @@ public class User {
         mStatistic = new ArrayList<>();
         mWorkouts = new ArrayList<>();
     }
-    public void AddWorkout( Workout workout ){
+    public void AddWorkout( iWorkout workout ){
         mWorkouts.add(workout);
     }
 }

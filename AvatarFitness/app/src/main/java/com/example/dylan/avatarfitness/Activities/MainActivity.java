@@ -26,8 +26,10 @@ import com.example.dylan.avatarfitness.Fragments.MapFragment;
 import com.example.dylan.avatarfitness.Fragments.NavigationDrawerFragment;
 import com.example.dylan.avatarfitness.Fragments.StatisticsFragment;
 import com.example.dylan.avatarfitness.Fragments.WorkoutFragment;
+import com.example.dylan.avatarfitness.Objects.Run;
 import com.example.dylan.avatarfitness.Objects.User;
 import com.example.dylan.avatarfitness.Objects.Workout;
+import com.example.dylan.avatarfitness.Objects.iWorkout;
 import com.example.dylan.avatarfitness.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -157,7 +159,7 @@ public class MainActivity extends ActionBarActivity
         return this.getBaseContext();
     }
 
-    public void SaveWorkout( Workout workout ){
+    public void SaveWorkout( iWorkout workout ){
         mUser.AddWorkout( workout );
     }
 

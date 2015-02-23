@@ -13,6 +13,7 @@ import android.widget.Chronometer;
 import android.widget.EditText;
 
 import com.example.dylan.avatarfitness.Objects.Workout;
+import com.example.dylan.avatarfitness.Objects.iWorkout;
 import com.example.dylan.avatarfitness.R;
 
 import java.text.DateFormat;
@@ -123,7 +124,7 @@ public class WorkoutFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
-        public void SaveWorkout( Workout workout );
+        public void SaveWorkout( iWorkout workout );
     }
 
 }

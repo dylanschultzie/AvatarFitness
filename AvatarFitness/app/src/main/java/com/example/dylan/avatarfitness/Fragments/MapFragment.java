@@ -8,15 +8,18 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.example.dylan.avatarfitness.Objects.Run;
+import com.example.dylan.avatarfitness.Objects.iWorkout;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -25,10 +28,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.example.dylan.avatarfitness.R;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class MapFragment extends Fragment implements LocationListener {
@@ -47,7 +50,9 @@ public class MapFragment extends Fragment implements LocationListener {
     private ArrayList<LatLng> mList = new ArrayList<>();
     private int mListLength;
     private float mOngoingDistanceTravelled;
-
+    private Chronometer mChrono;
+    private long mElapsedMillis;
+    private boolean mRunActive;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,8 +67,11 @@ public class MapFragment extends Fragment implements LocationListener {
         mDistanceTravelledTextView = (TextView) thisView.findViewById(R.id.distanceTextView);
         mStartButton = (Button) thisView.findViewById(R.id.StartMapsButton);
         mStopButton = (Button) thisView.findViewById(R.id.StopMapsButton);
+        mChrono = (Chronometer) thisView.findViewById(R.id.RunLengthChrono);
         mListLength = 0;
         mOngoingDistanceTravelled = 0;
+        mElapsedMillis = 0;
+        mRunActive = false;
 
 
         //Setting up Google Map
@@ -82,7 +90,7 @@ public class MapFragment extends Fragment implements LocationListener {
         mStartButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if (mLocation != null) {
+                if (mLocation != null && !mRunActive) {
                     StartRun();
                     LatLng latLng = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
                     mMap.addMarker(new MarkerOptions().position(latLng).title("Start"));
@@ -91,19 +99,21 @@ public class MapFragment extends Fragment implements LocationListener {
                 }
             }
         });
-        mStopButton.setOnClickListener(new View.OnClickListener(){
+        mStopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mLocation != null) {
+                if (mLocation != null && mRunActive) {
                     LatLng latLng = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
                     mMap.addMarker(new MarkerOptions().position(latLng).title("End"));
                     mList.add(latLng);
                     mMap.addPolyline(new PolylineOptions()
-                            .add(mList.get(mListLength-1),mList.get(mListLength))
+                            .add(mList.get(mListLength - 1), mList.get(mListLength))
                             .width(10)
                             .color(Color.BLUE));
+                    mElapsedMillis = SystemClock.elapsedRealtime() - mChrono.getBase();
                     mListLength++;
                     EndRun();
+                    mListener.SaveWorkout(new Run(mElapsedMillis, new Date(), mList ));
                 }
             }
         });
@@ -112,9 +122,13 @@ public class MapFragment extends Fragment implements LocationListener {
         return thisView;
     }
     public void StartRun(){
+        mRunActive = true;
         mLocationManager.requestLocationUpdates(mBestProvider, 1000, 0, this);
+        mChrono.start();
     }
     public void EndRun(){
+        mRunActive = false;
+        mChrono.stop();
         mLocationManager.removeUpdates(this);
     }
     @Override
@@ -203,5 +217,6 @@ public class MapFragment extends Fragment implements LocationListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
         public Context GetContext();
+        public void SaveWorkout( iWorkout workout );
     }
 }
