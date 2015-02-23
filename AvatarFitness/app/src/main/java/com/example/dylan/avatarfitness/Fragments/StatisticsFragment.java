@@ -3,46 +3,52 @@ package com.example.dylan.avatarfitness.Fragments;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Chronometer;
-import android.widget.EditText;
 
-import com.example.dylan.avatarfitness.Objects.Workout;
 import com.example.dylan.avatarfitness.R;
-
-import java.text.DateFormat;
-import java.util.Date;
-
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link WorkoutFragment.OnFragmentInteractionListener} interface
+ * {@link StatisticsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link WorkoutFragment#newInstance} factory method to
+ * Use the {@link StatisticsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WorkoutFragment extends Fragment {
-    private OnFragmentInteractionListener mListener;
-    private Chronometer mElapsedChrono;
-    DateFormat mDateFormat = DateFormat.getDateTimeInstance();
-    private static boolean mRunningChrono;
-    private long mElapsedMillis;
+public class StatisticsFragment extends Fragment {
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
-    public static WorkoutFragment newInstance() {
-        mRunningChrono = false;
-        WorkoutFragment fragment = new WorkoutFragment();
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    private OnFragmentInteractionListener mListener;
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment StatisticsFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static StatisticsFragment newInstance(String param1, String param2) {
+        StatisticsFragment fragment = new StatisticsFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public WorkoutFragment() {
+    public StatisticsFragment() {
         // Required empty public constructor
     }
 
@@ -50,40 +56,16 @@ public class WorkoutFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View thisView = inflater.inflate(R.layout.fragment_workout, container, false);
-
-        final EditText workoutName = (EditText) thisView.findViewById(R.id.WorkoutName);
-        final EditText workoutDescription = (EditText) thisView.findViewById(R.id.WorkoutDescription);
-        final Button startTimer = (Button) thisView.findViewById(R.id.StartWorkoutButton);
-        startTimer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                if( !mRunningChrono ){
-                    mRunningChrono = true;
-                    mElapsedChrono.setBase(SystemClock.elapsedRealtime());
-                    mElapsedChrono.start();
-                    startTimer.setText("Stop Workout");
-                }
-                else{
-                    mRunningChrono = false;
-                    mElapsedChrono.stop();
-                    mElapsedMillis = SystemClock.elapsedRealtime() - mElapsedChrono.getBase();
-                    mListener.SaveWorkout( new Workout( workoutName.getText().toString(),
-                            workoutDescription.getText().toString(), mElapsedMillis,
-                            new Date()));
-                    startTimer.setText("Start Workout");
-                }
-            }
-        });
-        mElapsedChrono = (Chronometer) thisView.findViewById(R.id.WorkoutLengthChrono);
-        return thisView;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_statistics, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -123,7 +105,6 @@ public class WorkoutFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
-        public void SaveWorkout( Workout workout );
     }
 
 }

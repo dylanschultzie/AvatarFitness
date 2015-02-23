@@ -1,8 +1,13 @@
 package com.example.dylan.avatarfitness.Activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -17,18 +22,25 @@ import android.support.v4.widget.DrawerLayout;
 
 import com.example.dylan.avatarfitness.Fragments.AccountCreationFragment;
 import com.example.dylan.avatarfitness.Fragments.HomeFragment;
+import com.example.dylan.avatarfitness.Fragments.MapFragment;
 import com.example.dylan.avatarfitness.Fragments.NavigationDrawerFragment;
+import com.example.dylan.avatarfitness.Fragments.StatisticsFragment;
 import com.example.dylan.avatarfitness.Fragments.WorkoutFragment;
 import com.example.dylan.avatarfitness.Objects.User;
 import com.example.dylan.avatarfitness.Objects.Workout;
 import com.example.dylan.avatarfitness.R;
-
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
 
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
         HomeFragment.OnFragmentInteractionListener,
         WorkoutFragment.OnFragmentInteractionListener,
+        MapFragment.OnFragmentInteractionListener,
+        StatisticsFragment.OnFragmentInteractionListener,
         AccountCreationFragment.OnFragmentInteractionListener {
 
     /**
@@ -71,6 +83,12 @@ public class MainActivity extends ActionBarActivity
             case 1:
                 fragment = new WorkoutFragment();
                 break;
+            case 2:
+                fragment = new StatisticsFragment();
+                break;
+            case 3:
+                fragment = new MapFragment();
+                break;
         }
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
@@ -88,6 +106,8 @@ public class MainActivity extends ActionBarActivity
             case 3:
                 mTitle = getString(R.string.Statistics);
                 break;
+            case 4:
+                mTitle = getString(R.string.Map);
         }
     }
 
@@ -132,48 +152,22 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
+    public Context GetContext(){
+        return this.getBaseContext();
     }
 
     public void SaveWorkout( Workout workout ){
         mUser.AddWorkout( workout );
     }
 
+    private boolean isGooglePlayServicesAvailable() {
+        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (ConnectionResult.SUCCESS == status) {
+            return true;
+        } else {
+            GooglePlayServicesUtil.getErrorDialog(status, this, 0).show();
+            return false;
+        }
+    }
 }
