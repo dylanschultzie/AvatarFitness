@@ -1,5 +1,6 @@
 package com.example.dylan.avatarfitness.Objects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,11 +8,12 @@ import java.util.List;
  */
 public class User {
     private Avatar mAvatar;
-    private List<iStatistic> mStatistic;
-    private List<iWorkout> mWorkouts;
+    private ArrayList<iStatistic> mStatistic;
+    private ArrayList<iWorkout> mWorkouts;
 
     public User(){
-
+        mStatistic = new ArrayList<>();
+        mWorkouts = new ArrayList<>();
     }
     public void AddWorkout( Workout workout ){
         mWorkouts.add(workout);
