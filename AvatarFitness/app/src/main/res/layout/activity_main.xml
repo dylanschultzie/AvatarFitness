@@ -5,8 +5,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    <!--android:background="@drawable/bg1">-->
+    tools:context=".MainActivity"
+    android:background="@drawable/bg1">
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->
@@ -22,7 +22,8 @@
     <!-- The drawer is given a fixed width in dp and extends the full height of
          the container. -->
     <fragment android:id="@+id/navigation_drawer"
-        android:layout_width="@dimen/navigation_drawer_width" android:layout_height="match_parent"
+        android:layout_width="@dimen/navigation_drawer_width"
+        android:layout_height="match_parent"
         android:layout_gravity="start"
         android:name="com.example.dylan.avatarfitness.Fragments.NavigationDrawerFragment"
         tools:layout="@layout/fragment_navigation_drawer" />

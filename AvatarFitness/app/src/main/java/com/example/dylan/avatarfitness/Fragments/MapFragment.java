@@ -124,6 +124,7 @@ public class MapFragment extends Fragment implements LocationListener {
     public void StartRun(){
         mRunActive = true;
         mLocationManager.requestLocationUpdates(mBestProvider, 1000, 0, this);
+        mChrono.setBase(0);
         mChrono.start();
     }
     public void EndRun(){
