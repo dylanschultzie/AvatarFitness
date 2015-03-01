@@ -40,11 +40,17 @@ public final class DatabaseContract implements BaseColumns {
         public static final String COLUMN_NAME_DURATION = "Duration";
     }
 
+    public static abstract class Runs implements BaseColumns{
+        public static final String TABLE_NAME = "Runs";
+        public static final String COLUMN_NAME_RUN_ID = "RunID";
+        public static final String COLUMN_NAME_WORKOUT_ID_FK = "WorkoutID";
+        public static final String COLUMN_NAME_DISTANCE = "Distance";
+    }
+
     public static abstract class Routes implements BaseColumns{
         public static final String TABLE_NAME = "Routes";
         public static final String COLUMN_NAME_ROUTE_ID = "RouteID";
-        public static final String COLUMN_NAME_DISTANCE = "Distance";
-        public static final String COLUMN_NAME_WORKOUT_ID_FK = "WorkoutID";
+        public static final String COLUMN_NAME_RUN_ID_FK = "RunID";
         public static final String COLUMN_NAME_LATITUDE = "Latitude";
         public static final String COLUMN_NAME_LONGITUDE = "Longitude";
         public static final String COLUMN_NAME_LAT_LONG_ID = "LatLongID";
@@ -75,15 +81,21 @@ public final class DatabaseContract implements BaseColumns {
                     Workouts.COLUMN_NAME_DURATION + REAL_TYPE + COMMA_SEP +
                     FOREIGN_KEY_CON + "(" + Workouts.COLUMN_NAME_USER_ID_FK + ")" + REFERENCE_CON + Users.TABLE_NAME + "(" + Users.COLUMN_NAME_USER_ID + ") )";
 
+    public static final String SQL_CREATE_RUNS_TABLE =
+            "CREATE TABLE " + Runs.TABLE_NAME + " (" +
+                    Runs.COLUMN_NAME_RUN_ID + INTEGER_TYPE + PRIMARY_KEY_CON + COMMA_SEP +
+                    Runs.COLUMN_NAME_WORKOUT_ID_FK + INTEGER_TYPE + COMMA_SEP +
+                    Runs.COLUMN_NAME_DISTANCE + REAL_TYPE + COMMA_SEP +
+                    FOREIGN_KEY_CON + "(" + Runs.COLUMN_NAME_WORKOUT_ID_FK + ")" + REFERENCE_CON + Workouts.TABLE_NAME + "(" + Workouts.COLUMN_NAME_WORKOUT_ID + ") )";
+
     public static final String SQL_CREATE_ROUTES_TABLE =
             "CREATE TABLE " + Routes.TABLE_NAME + " (" +
                     Routes.COLUMN_NAME_ROUTE_ID + INTEGER_TYPE + PRIMARY_KEY_CON + COMMA_SEP +
-                    Routes.COLUMN_NAME_WORKOUT_ID_FK + INTEGER_TYPE + COMMA_SEP +
+                    Routes.COLUMN_NAME_RUN_ID_FK + INTEGER_TYPE + COMMA_SEP +
                     Routes.COLUMN_NAME_LATITUDE + REAL_TYPE + COMMA_SEP +
-                    Routes.COLUMN_NAME_DISTANCE + REAL_TYPE + COMMA_SEP +
                     Routes.COLUMN_NAME_LONGITUDE + REAL_TYPE + COMMA_SEP +
                     Routes.COLUMN_NAME_LAT_LONG_ID + INTEGER_TYPE + COMMA_SEP +
-                    FOREIGN_KEY_CON + "(" + Routes.COLUMN_NAME_WORKOUT_ID_FK + ")" + REFERENCE_CON + Workouts.TABLE_NAME + "(" + Workouts.COLUMN_NAME_WORKOUT_ID + ") )";
+                    FOREIGN_KEY_CON + "(" + Routes.COLUMN_NAME_RUN_ID_FK + ")" + REFERENCE_CON + Runs.TABLE_NAME + "(" + Runs.COLUMN_NAME_RUN_ID + ") )";
 
     public static final String SQL_CREATE_EXERCISES_TABLE =
             "CREATE TABLE " + Exercises.TABLE_NAME + " (" +
@@ -105,4 +117,7 @@ public final class DatabaseContract implements BaseColumns {
 
     public static final String  SQL_DELETE_EXERCISES_TABLE =
             "DROP TABLE IF EXISTS " + Exercises.TABLE_NAME + ";";
+
+    public static final String SQL_DELETE_RUNS_TABLE =
+            "DROP TABLE IF EXISTS " + Runs.TABLE_NAME + ";";
 }

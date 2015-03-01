@@ -112,7 +112,8 @@ public class MapFragment extends Fragment implements LocationListener {
                     mElapsedMillis = SystemClock.elapsedRealtime() - mChrono.getBase();
                     mListLength++;
                     EndRun();
-                    mListener.SaveWorkout(new Run(mElapsedMillis, new Date(), mList ));
+                    mListener.SaveWorkout(new Run(mElapsedMillis, new Date(), mList,
+                            mOngoingDistanceTravelled), 0);
                 }
             }
         });
@@ -123,7 +124,7 @@ public class MapFragment extends Fragment implements LocationListener {
     public void StartRun(){
         mRunActive = true;
         mLocationManager.requestLocationUpdates(mBestProvider, 1000, 0, this);
-        mChrono.setBase(0);
+        mChrono.setBase(SystemClock.elapsedRealtime());
         mChrono.start();
     }
     public void EndRun(){
@@ -217,6 +218,6 @@ public class MapFragment extends Fragment implements LocationListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
         public Context GetContext();
-        public void SaveWorkout( iWorkout workout );
+        public void SaveWorkout( iWorkout workout, int workoutType );
     }
 }

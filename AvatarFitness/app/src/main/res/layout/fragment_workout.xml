@@ -30,6 +30,21 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:id="@+id/WeightEditText"
+                android:layout_gravity="center_horizontal"
+                android:hint="Enter how much weight in pounds (ex. 135)"
+                android:editable="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:id="@+id/SetsEditText"
                 android:layout_gravity="center_horizontal"
                 android:hint="Enter how many sets (ex. 5)"

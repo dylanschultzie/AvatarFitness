@@ -1,7 +1,6 @@
 package com.example.dylan.avatarfitness.Activities;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -19,12 +18,13 @@ import com.example.dylan.avatarfitness.Fragments.NavigationDrawerFragment;
 import com.example.dylan.avatarfitness.Fragments.StatisticsFragment;
 import com.example.dylan.avatarfitness.Fragments.WorkoutFragment;
 import com.example.dylan.avatarfitness.Managers.DatabaseManager;
+import com.example.dylan.avatarfitness.Objects.Run;
 import com.example.dylan.avatarfitness.Objects.User;
+import com.example.dylan.avatarfitness.Objects.Workout;
 import com.example.dylan.avatarfitness.Objects.iWorkout;
 import com.example.dylan.avatarfitness.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
@@ -149,8 +149,18 @@ public class MainActivity extends ActionBarActivity
         return this.getBaseContext();
     }
 
-    public void SaveWorkout( iWorkout workout ){
+    public void SaveWorkout( iWorkout workout, int workoutType ){
+
         mUser.AddWorkout( workout );
+        switch(workoutType){
+            case 0:
+                db.InsertRunByUserID(mUser, (Run)workout);
+                break;
+
+            case 1:
+                db.InsertExerciseByUserID(mUser, (Workout)workout);
+                break;
+        }
     }
 
     private boolean isGooglePlayServicesAvailable() {

@@ -63,6 +63,7 @@ public class WorkoutFragment extends Fragment {
         final AutoCompleteTextView exerciseTypeEditText = (AutoCompleteTextView) thisView.findViewById(R.id.ExerciseTypeAutoText);
         final EditText workoutSets = (EditText) thisView.findViewById(R.id.SetsEditText);
         final EditText workoutReps = (EditText) thisView.findViewById(R.id.RepsEditText);
+        final EditText workoutWeight = (EditText) thisView.findViewById(R.id.WeightEditText);
         final Button startTimer = (Button) thisView.findViewById(R.id.StartWorkoutButton);
 
         //auto complete for exercise type
@@ -87,10 +88,12 @@ public class WorkoutFragment extends Fragment {
                     mElapsedMillis = SystemClock.elapsedRealtime() - mElapsedChrono.getBase();
                     mElapsedMillis /= 1000;
                     mListener.SaveWorkout( new Workout( Integer.parseInt(workoutSets.getText().toString()),
-                            Integer.parseInt(workoutReps.getText().toString()),
-                            exerciseTypeEditText.toString(),
-                            mElapsedMillis,
-                            new Date()));
+                                                        Integer.parseInt(workoutReps.getText().toString()),
+                                                        exerciseTypeEditText.getText().toString(),
+                                                        mElapsedMillis,
+                                                        new Date(),
+                                                        Integer.parseInt(workoutWeight.getText().toString())),
+                                            1);
                     startTimer.setText("Start Workout");
                 }
             }
@@ -136,7 +139,7 @@ public class WorkoutFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
-        public void SaveWorkout( iWorkout workout );
+        public void SaveWorkout( iWorkout workout, int workoutType );
     }
 
 }
