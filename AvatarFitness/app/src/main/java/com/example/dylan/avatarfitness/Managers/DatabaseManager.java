@@ -44,19 +44,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
         SQLiteDatabase writeDB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.clear();
-        int userID = 0;
-
         Cursor cur = readDB.query(DatabaseContract.Users.TABLE_NAME,
                 new String[] {DatabaseContract.Users.COLUMN_NAME_USER_ID},
                 DatabaseContract.Users.COLUMN_NAME_USER_NAME + " = '" + username + "' AND " +
                 DatabaseContract.Users.COLUMN_NAME_PASSWORD + " = '" + password + "'", null,
                 null, null, null);
 
-        User myUser = new User(0,username,"");
+        User myUser = new User(0, username, password);
         if (cur.moveToFirst()){
             do {
                 myUser.setUserID(cur.getLong(0));
-                myUser.setPassword(cur.getString(1));
             } while (cur.moveToNext());
         }
         return myUser;
