@@ -8,9 +8,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.dylan.avatarfitness.Objects.Workout;
 import com.example.dylan.avatarfitness.Objects.iWorkout;
@@ -44,7 +47,6 @@ public class WorkoutFragment extends Fragment {
     }
 
     public WorkoutFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -58,10 +60,17 @@ public class WorkoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View thisView = inflater.inflate(R.layout.fragment_workout, container, false);
-
-        final EditText workoutName = (EditText) thisView.findViewById(R.id.WorkoutName);
-        final EditText workoutDescription = (EditText) thisView.findViewById(R.id.WorkoutDescription);
+        final AutoCompleteTextView exerciseTypeEditText = (AutoCompleteTextView) thisView.findViewById(R.id.ExerciseTypeAutoText);
+        final EditText workoutSets = (EditText) thisView.findViewById(R.id.SetsEditText);
+        final EditText workoutReps = (EditText) thisView.findViewById(R.id.RepsEditText);
         final Button startTimer = (Button) thisView.findViewById(R.id.StartWorkoutButton);
+
+        //auto complete for exercise type
+        ArrayAdapter<String> exerciseTypeAdapter = new ArrayAdapter<String>(thisView.getContext(),
+                android.R.layout.simple_dropdown_item_1line,getResources().getStringArray(R.array.exerciseType));
+        exerciseTypeEditText.setAdapter(exerciseTypeAdapter);
+
+
         startTimer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -76,8 +85,11 @@ public class WorkoutFragment extends Fragment {
                     mRunningChrono = false;
                     mElapsedChrono.stop();
                     mElapsedMillis = SystemClock.elapsedRealtime() - mElapsedChrono.getBase();
-                    mListener.SaveWorkout( new Workout( workoutName.getText().toString(),
-                            workoutDescription.getText().toString(), mElapsedMillis,
+                    mElapsedMillis /= 1000;
+                    mListener.SaveWorkout( new Workout( Integer.parseInt(workoutSets.getText().toString()),
+                            Integer.parseInt(workoutReps.getText().toString()),
+                            exerciseTypeEditText.toString(),
+                            mElapsedMillis,
                             new Date()));
                     startTimer.setText("Start Workout");
                 }

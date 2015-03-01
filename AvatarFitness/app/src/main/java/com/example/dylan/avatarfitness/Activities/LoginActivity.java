@@ -379,7 +379,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                                     try{
                                         finish();
                                         db = new DatabaseManager(mContext);
-                                        mUser=db.InsertUser(mUser);
+                                        mUser = db.InsertUser(mUser);
                                         Toast myToast = Toast.makeText(mContext,R.string.updating, Toast.LENGTH_SHORT);
                                         myToast.show();
                                         Intent myIntent = new Intent(LoginActivity.this,MainActivity.class);

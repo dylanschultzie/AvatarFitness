@@ -44,8 +44,11 @@ public class MainActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent mIntent = getIntent();
-        int userID = mIntent.getIntExtra("userID", 0);
+        Bundle extras = getIntent().getExtras();
+        long userID = 0;
+        if (extras != null) {
+            userID = extras.getLong("userID");
+        }
         db = new DatabaseManager(this);
         mUser = db.GetUserByID(userID);
 

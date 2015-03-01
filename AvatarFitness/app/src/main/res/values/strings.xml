@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="exerciseType">
+        <item>Pull-ups</item>
+        <item>Push-ups</item>
+        <item>Frenchies</item>
+        <item>Bench Press</item>
+        <item>Squats</item>
+        <item>Sit-ups</item>
+        <item>Plank</item>
+        <item>Shoulder Press</item>
+        <item>Hangboard</item>
+        <item>Reverse Forearm Curls</item>
+        <item>Leg Lifts</item>
+        <item>Ring Circuits</item>
+    </string-array>
+
     <string name="app_name">AvatarFitness</string>
     <string name="Home">Home</string>
     <string name="Workout">Workout</string>
@@ -15,5 +30,6 @@
     <string name="no">No</string>
     <string name="updating">Updating</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

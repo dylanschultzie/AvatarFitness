@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.dylan.avatarfitness.Objects.User;
 
+import java.io.File;
+
 /**
  * Created by Dylan on 2/22/2015.
  */
@@ -19,8 +21,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         getWritableDatabase();
 
-        //File dbFile = context.getDatabasePath(DATABASE_NAME);
-        //dbFile.delete();
+//        File dbFile = context.getDatabasePath(DATABASE_NAME);
+//        dbFile.delete();
     }
 
     @Override
@@ -29,6 +31,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.SQL_CREATE_USERS_TABLE);
         db.execSQL(DatabaseContract.SQL_CREATE_WORKOUTS_TABLE);
         db.execSQL(DatabaseContract.SQL_CREATE_ROUTES_TABLE);
+        db.execSQL(DatabaseContract.SQL_CREATE_EXERCISES_TABLE);
     }
 
     @Override
@@ -36,6 +39,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.SQL_DELETE_USERS_TABLE);
         db.execSQL(DatabaseContract.SQL_DELETE_WORKOUTS_TABLE);
         db.execSQL(DatabaseContract.SQL_DELETE_ROUTES_TABLE);
+        db.execSQL(DatabaseContract.SQL_DELETE_EXERCISES_TABLE);
         onCreate(db);
     }
 
@@ -52,13 +56,15 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         User myUser = new User(0, username, password);
         if (cur.moveToFirst()){
-            do {
                 myUser.setUserID(cur.getLong(0));
-            } while (cur.moveToNext());
         }
         return myUser;
     }
-    public User GetUserByID(int userID){
+
+    public User GetUserByID(long userID){
+//        TODO: delete this line!
+        userID = 1;
+
         SQLiteDatabase readDB = this.getReadableDatabase();
         SQLiteDatabase writeDB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -71,10 +77,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         User myUser = new User(userID,"","");
         if (cur.moveToFirst()){
-            do {
-                myUser.setUsername(cur.getString(0));
-                myUser.setPassword(cur.getString(1));
-            } while (cur.moveToNext());
+            myUser.setUsername(cur.getString(0));
+            myUser.setPassword(cur.getString(1));
+
+            cur = readDB.query(DatabaseContract.Workouts.TABLE_NAME,
+                    null, DatabaseContract.Workouts.COLUMN_NAME_USER_ID_FK + " = '" + myUser.getUserID() + "'",
+                    null, null, null, null);
         }
         return myUser;
     }

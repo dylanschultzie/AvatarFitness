@@ -28,16 +28,23 @@
         <activity
             android:name=".Activities.MainActivity"
             android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name=".Activities.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
+
+
+            <!--move this to loginactivity when it's ready to be deployed in order to allow log in
+            functionality. neat!-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
+        </activity>
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+
         </activity>
 
         <meta-data

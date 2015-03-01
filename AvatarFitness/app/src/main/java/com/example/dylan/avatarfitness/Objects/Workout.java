@@ -7,31 +7,24 @@ import java.util.Date;
  */
 public class Workout implements iWorkout {
     protected float mDuration;
-    protected int mIntensity;
     protected String mDescription;
-    protected String mName;
+    protected int mReps;
+    protected int mSets;
     protected Date mDate;
 
     public Workout(){
         mDuration = 0;
-        mIntensity = 0;
+        mReps = 0;
+        mSets = 0;
         mDescription = "";
-        mName = "";
     }
 
-    public Workout( String name, String description, float duration, Date date ){
+    public Workout( int sets, int reps, String description, float duration, Date date ){
         mDescription = description;
         mDuration = duration;
-        mName = name;
+        mReps = reps;
+        mSets = sets;
         mDate = date;
-    }
-
-    public Workout( String name, String description, float duration, Date date, int intensity ){
-        mDescription = description;
-        mIntensity = intensity;
-        mDuration = duration;
-        mDate = date;
-        mName = name;
     }
 
     @Override

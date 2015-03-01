@@ -1,39 +1,68 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.dylan.avatarfitness.Fragments.WorkoutFragment">
+    tools:context="com.example.dylan.avatarfitness.Fragments.AccountCreationFragment">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/WorkoutName"
-        android:layout_gravity="center_horizontal"
-        android:editable="true"
-        android:text="Enter Workout Name (ex. Bench Press)" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/WorkoutDescription"
-        android:layout_gravity="center_horizontal"
-        android:text="Enter Workout Description (ex. 5x5 @ 185)"
-        android:editable="true" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <Chronometer
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/WorkoutLengthChrono"
-        android:layout_gravity="center_horizontal" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Workout"
-        android:id="@+id/StartWorkoutButton"
-        android:layout_gravity="center_horizontal" />
+            <AutoCompleteTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ExerciseTypeAutoText"
+                android:hint="Exercise Type (ex. Bench Press)" />
+        </LinearLayout>
 
-</LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/SetsEditText"
+                android:layout_gravity="center_horizontal"
+                android:hint="Enter how many sets (ex. 5)"
+                android:editable="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/RepsEditText"
+                android:layout_gravity="center_horizontal"
+                android:hint="Enter how many reps (ex. 5)"
+                android:editable="true" />
+        </LinearLayout>
+
+        <Chronometer
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/WorkoutLengthChrono"
+            android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Workout"
+            android:id="@+id/StartWorkoutButton"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+</FrameLayout>

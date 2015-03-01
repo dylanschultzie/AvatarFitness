@@ -10,18 +10,15 @@ public class User {
     private String mUsername;
     private String mPassword;
     private Avatar mAvatar;
-    private ArrayList<iStatistic> mStatistic;
     private ArrayList<iWorkout> mWorkouts;
 
     public User(){
-        mStatistic = new ArrayList<>();
         mWorkouts = new ArrayList<>();
     }
     public User( long userID, String username, String password ){
         mUserID = userID;
         mUsername = username;
         mPassword = password;
-        mStatistic = new ArrayList<>();
         mWorkouts = new ArrayList<>();
     }
     public void AddWorkout( iWorkout workout ){

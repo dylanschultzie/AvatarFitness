@@ -67,7 +67,6 @@ public class MapFragment extends Fragment implements LocationListener {
         mDistanceTravelledTextView = (TextView) thisView.findViewById(R.id.distanceTextView);
         mStartButton = (Button) thisView.findViewById(R.id.StartMapsButton);
         mStopButton = (Button) thisView.findViewById(R.id.StopMapsButton);
-        mChrono = (Chronometer) thisView.findViewById(R.id.RunLengthChrono);
         mListLength = 0;
         mOngoingDistanceTravelled = 0;
         mElapsedMillis = 0;
@@ -118,7 +117,7 @@ public class MapFragment extends Fragment implements LocationListener {
             }
         });
 
-
+        mChrono = (Chronometer) thisView.findViewById(R.id.RunLengthChrono);
         return thisView;
     }
     public void StartRun(){
