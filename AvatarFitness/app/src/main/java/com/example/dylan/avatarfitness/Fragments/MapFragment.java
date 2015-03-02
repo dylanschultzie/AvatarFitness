@@ -112,7 +112,7 @@ public class MapFragment extends Fragment implements LocationListener {
                     mListLength++;
                     mMap.addMarker(new MarkerOptions().position(latLng).title("End"));
                     EndRun();
-                    mListener.SaveWorkout(new Run(mElapsedMillis, new Date(), mList,
+                    mListener.SaveWorkout(new Run(mElapsedMillis/1000, new Date(), mList,
                             mOngoingDistanceTravelled), 0);
                 }
             }

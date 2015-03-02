@@ -138,11 +138,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
                         if(c.moveToFirst()){
 
                             int rID = c.getInt(0);
-                            float distance = c.getFloat(0);
+                            float distance = c.getFloat(1);
                             do{
                                 Cursor cc = readDB.query(DatabaseContract.Routes.TABLE_NAME,
-                                        new String[] {DatabaseContract.Routes.COLUMN_NAME_LAT_LONG_ID,
-                                                DatabaseContract.Routes.COLUMN_NAME_LATITUDE,
+                                        new String[] {DatabaseContract.Routes.COLUMN_NAME_LATITUDE,
                                                 DatabaseContract.Routes.COLUMN_NAME_LONGITUDE},
                                         DatabaseContract.Routes.COLUMN_NAME_RUN_ID_FK + " = '" + rID + "'", null, null, null,
                                         DatabaseContract.Routes.COLUMN_NAME_LAT_LONG_ID + " ASC");
@@ -150,7 +149,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                                 if(cc.moveToFirst()){
                                     ArrayList<LatLng> list = new ArrayList<>();
                                     do {
-                                        list.add(new LatLng(cur.getFloat(0), cur.getFloat(1)));
+                                        list.add(new LatLng(cc.getFloat(0), cc.getFloat(1)));
                                     }while(cc.moveToNext());
 
                                     user.AddWorkout( new Run(duration, date, list, distance ));
