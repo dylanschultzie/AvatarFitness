@@ -103,7 +103,6 @@ public class MapFragment extends Fragment implements LocationListener {
             public void onClick(View v) {
                 if (mLocation != null && mRunActive) {
                     LatLng latLng = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(latLng).title("End"));
                     mList.add(latLng);
                     mMap.addPolyline(new PolylineOptions()
                             .add(mList.get(mListLength - 1), mList.get(mListLength))
@@ -111,6 +110,7 @@ public class MapFragment extends Fragment implements LocationListener {
                             .color(Color.BLUE));
                     mElapsedMillis = SystemClock.elapsedRealtime() - mChrono.getBase();
                     mListLength++;
+                    mMap.addMarker(new MarkerOptions().position(latLng).title("End"));
                     EndRun();
                     mListener.SaveWorkout(new Run(mElapsedMillis, new Date(), mList,
                             mOngoingDistanceTravelled), 0);
@@ -156,7 +156,7 @@ public class MapFragment extends Fragment implements LocationListener {
                 mList.get(mListLength).longitude, distance);
         mOngoingDistanceTravelled += distance[0] * 0.000621371;
         mLocationTextView.setText("Latitude:" + latLng.latitude + ", Longitude:" + latLng.longitude);
-        mDistanceTravelledTextView.setText("Distance:" + mOngoingDistanceTravelled + " miles");
+        mDistanceTravelledTextView.setText("Distance:" + String.format("%.2f",mOngoingDistanceTravelled) + " miles");
     }
 
     public void SetLocation(){
@@ -215,7 +215,6 @@ public class MapFragment extends Fragment implements LocationListener {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
         public Context GetContext();
         public void SaveWorkout( iWorkout workout, int workoutType );

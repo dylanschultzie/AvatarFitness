@@ -10,6 +10,7 @@ public class User {
     private String mUsername;
     private String mPassword;
     private Avatar mAvatar;
+
     private ArrayList<iWorkout> mWorkouts;
 
     public User(){
@@ -20,6 +21,9 @@ public class User {
         mUsername = username;
         mPassword = password;
         mWorkouts = new ArrayList<>();
+    }
+    public ArrayList<iWorkout> getWorkouts() {
+        return mWorkouts;
     }
     public void AddWorkout( iWorkout workout ){
         mWorkouts.add(workout);

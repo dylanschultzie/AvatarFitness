@@ -20,6 +20,7 @@ import com.example.dylan.avatarfitness.Objects.iWorkout;
 import com.example.dylan.avatarfitness.R;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -68,9 +69,8 @@ public class WorkoutFragment extends Fragment {
 
         //auto complete for exercise type
         ArrayAdapter<String> exerciseTypeAdapter = new ArrayAdapter<String>(thisView.getContext(),
-                android.R.layout.simple_dropdown_item_1line,getResources().getStringArray(R.array.exerciseType));
+                android.R.layout.simple_dropdown_item_1line, mListener.getExerciseTypeList());
         exerciseTypeEditText.setAdapter(exerciseTypeAdapter);
-
 
         startTimer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +140,7 @@ public class WorkoutFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
         public void SaveWorkout( iWorkout workout, int workoutType );
+        public ArrayList<String> getExerciseTypeList();
     }
 
 }

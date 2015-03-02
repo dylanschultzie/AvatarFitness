@@ -25,9 +25,11 @@ public class Run implements iWorkout {
         mRoute = list;
     }
 
+    @Override
     public Date getDate(){
         return mDate;
     }
+    @Override
     public float getDuration(){
         return mDuration;
     }
@@ -41,5 +43,10 @@ public class Run implements iWorkout {
     @Override
     public void LogWorkout() {
 
+    }
+
+    @Override
+    public String getDescription() {
+        return "Run";
     }
 }

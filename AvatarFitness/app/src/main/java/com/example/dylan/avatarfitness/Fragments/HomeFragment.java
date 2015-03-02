@@ -1,16 +1,19 @@
 package com.example.dylan.avatarfitness.Fragments;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 
-import com.example.dylan.avatarfitness.Activities.MainActivity;
 import com.example.dylan.avatarfitness.R;
+
+import java.io.File;
 
 
 /**
@@ -68,15 +71,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
-//        Button workoutButton = (Button)view.findViewById(R.id.WorkoutButton);
-//        Button statisticsButton = (Button)view.findViewById(R.id.StatisticsButton);
-//        workoutButton.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v) {
-//                ((MainActivity)getActivity()).SwapActivity();
-//            }
-//        });
-        // Inflate the layout for this fragment
+
         return view;
     }
 

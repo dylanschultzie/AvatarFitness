@@ -54,6 +54,28 @@ public class DatabaseManager extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public ArrayList<String> GetExerciseTypeList(){
+        SQLiteDatabase readDB = this.getReadableDatabase();
+        SQLiteDatabase writeDB = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.clear();
+        ArrayList<String> list = new ArrayList<>();
+
+        Cursor cur = readDB.query(DatabaseContract.Workouts.TABLE_NAME,
+                new String[] {DatabaseContract.Workouts.COLUMN_NAME_DESCRIPTION},
+                null,null,null,null,null);
+
+        if(cur.moveToFirst()){
+            do{
+                if(cur.getString(0).equals("Run")){  }
+                else{
+                    list.add(cur.getString(0));
+                }
+            }while(cur.moveToNext());
+        }
+        return list;
+    }
+
     public User GetUser(String username, String password){
         SQLiteDatabase readDB = this.getReadableDatabase();
         SQLiteDatabase writeDB = this.getWritableDatabase();
@@ -149,10 +171,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
                                 DatabaseContract.Exercises.COLUMN_NAME_WORKOUT_ID_FK + " = '" + wID + "'",
                                 null, null, null, null);
 
-                        int weight = c.getInt(0);
-                        int sets = c.getInt(1);
-                        int reps = c.getInt(2);
-                        user.AddWorkout( new Workout(sets, reps, description, duration, date, weight));
+                        if( c.moveToFirst()){
+                            int weight = c.getInt(0);
+                            int sets = c.getInt(1);
+                            int reps = c.getInt(2);
+                            user.AddWorkout( new Workout(sets, reps, description, duration, date, weight));
+                        }
                     }
                 }while(cur.moveToNext());
             }

@@ -38,6 +38,7 @@ public class Workout implements iWorkout {
         this.mWeight = mWeight;
     }
 
+    @Override
     public float getDuration() {
         return mDuration;
     }
@@ -46,6 +47,7 @@ public class Workout implements iWorkout {
         this.mDuration = mDuration;
     }
 
+    @Override
     public String getDescription() {
         return mDescription;
     }
@@ -70,6 +72,7 @@ public class Workout implements iWorkout {
         this.mSets = mSets;
     }
 
+    @Override
     public Date getDate() {
         return mDate;
     }

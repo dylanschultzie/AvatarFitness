@@ -26,6 +26,8 @@ import com.example.dylan.avatarfitness.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import java.util.ArrayList;
+
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
         HomeFragment.OnFragmentInteractionListener,
@@ -162,6 +164,19 @@ public class MainActivity extends ActionBarActivity
                 break;
         }
     }
+
+    public ArrayList<String> getExerciseTypeList(){
+        return db.GetExerciseTypeList();
+    }
+
+    public ArrayList<String> GetExerciseDate(){
+        ArrayList<String> list = new ArrayList<>();
+        for( iWorkout workout: mUser.getWorkouts()){
+            list.add(workout.getDescription() + ", " + workout.getDate().toString());
+        }
+        return list;
+    }
+
 
     private boolean isGooglePlayServicesAvailable() {
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
