@@ -188,6 +188,17 @@ public class MainActivity extends ActionBarActivity
         return list;
     }
 
+    public iWorkout GetWorkoutByExerciseDate( String exercise, String date){
+        iWorkout returnedWorkout = null;
+        for( iWorkout workout : mUser.getWorkouts()){
+            if( workout.getDate().toString().equals(date) && workout.getDescription().equals(exercise) ){
+                returnedWorkout = workout;
+            }
+        }
+        return returnedWorkout;
+    }
+
+
 
     private boolean isGooglePlayServicesAvailable() {
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);

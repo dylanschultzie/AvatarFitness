@@ -125,13 +125,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
                     long wID = cur.getLong(0);
                     float duration = cur.getFloat(1);
                     String description = cur.getString(2);
-                    Date date = new Date();
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-                    try {
-                        date = format.parse(cur.getString(3));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
+                    Date date = null;
+                    date = new Date(cur.getString(3));
 
                     if(description.equals("Run")){
                         Cursor c = readDB.query(DatabaseContract.Runs.TABLE_NAME,
