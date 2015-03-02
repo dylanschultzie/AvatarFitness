@@ -9,11 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 
+import com.example.dylan.avatarfitness.Objects.Workout;
+import com.example.dylan.avatarfitness.Objects.iWorkout;
 import com.example.dylan.avatarfitness.R;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class StatisticsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
@@ -40,15 +49,53 @@ public class StatisticsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistics, container, false);
+        final Spinner exerciseTypeSpinner = (Spinner) view.findViewById(R.id.ExerciseTypeSpinner);
+        Button refreshButton = (Button) view.findViewById(R.id.RefreshButtonStatistics);
+        final GraphView graph = (GraphView) view.findViewById(R.id.graph);
 
-        mRouteListAdapter = new ArrayAdapter<>(view.getContext(),
-                android.R.layout.simple_list_item_1, mListener.GetExerciseDate() );
-        ListView listView = (ListView) view.findViewById(R.id.WorkoutHistoryListView);
-        listView.setAdapter(mRouteListAdapter);
-//        listView.setOnClickListener();
+        ArrayList<String> list = CleanExerciseList(mListener.getExerciseTypeList());
 
+        //spinner for exercise type
+        ArrayAdapter<String> exerciseTypeAdapter = new ArrayAdapter<>(view.getContext(),
+                android.R.layout.simple_spinner_item, list);
+        exerciseTypeSpinner.setAdapter(exerciseTypeAdapter);
+
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<iWorkout> workoutList = mListener.GetExerciseDate(exerciseTypeSpinner.getSelectedItem().toString());
+                DataPoint[] dataPoints = new DataPoint[workoutList.size()];
+                Workout temp = null;
+                int i = 0;
+                for( iWorkout workout : workoutList){
+                    temp = (Workout)workout;
+                    dataPoints[i++] = new DataPoint(temp.getDate(),temp.getWeight());
+                }
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
+                graph.addSeries(series);
+
+                // set date label formatter
+                graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+                graph.getGridLabelRenderer().setNumHorizontalLabels(5); // only 4 because of the space
+
+                // set manual x bounds to have nice steps
+                graph.getViewport().setMinX(dataPoints[0].getX());
+                graph.getViewport().setMaxX(dataPoints[workoutList.size()-1].getX());
+                graph.getViewport().setXAxisBoundsManual(true);
+            }
+        });
 
         return view;
+    }
+
+    public ArrayList<String> CleanExerciseList( ArrayList<String> list ){
+        ArrayList<String> tempList = new ArrayList<>();
+        for(String string : list){
+            if(!tempList.contains(string)){
+                tempList.add(string);
+            }
+        }
+        return tempList;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -77,7 +124,8 @@ public class StatisticsFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
-        public ArrayList<String> GetExerciseDate();
+        public ArrayList<iWorkout> GetExerciseDate( String exerciseType );
+        public ArrayList<String> getExerciseTypeList();
     }
 
 }

@@ -191,6 +191,15 @@ public class MainActivity extends ActionBarActivity
         return list;
     }
 
+    public ArrayList<iWorkout> GetExerciseDate( String exerciseType ){
+        ArrayList<iWorkout> list = new ArrayList<>();
+        for( iWorkout workout: mUser.getWorkouts()){
+            if( workout.getDescription().equals(exerciseType))
+            list.add(workout);
+        }
+        return list;
+    }
+
     public iWorkout GetWorkoutByExerciseDate( String exercise, String date){
         iWorkout returnedWorkout = null;
         for( iWorkout workout : mUser.getWorkouts()){

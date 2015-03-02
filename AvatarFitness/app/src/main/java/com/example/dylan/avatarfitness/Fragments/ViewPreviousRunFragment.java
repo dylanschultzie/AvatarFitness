@@ -69,7 +69,7 @@ public class ViewPreviousRunFragment extends Fragment implements LocationListene
         mCriteria = new Criteria();
         mBestProvider = mLocationManager.getBestProvider(mCriteria, true);
         mLocation = mLocationManager.getLastKnownLocation(mBestProvider);
-        mDistanceTravelledTextView.setText("Distance:" + mRun.getDistance() + " miles, Duration: " + mRun.getDuration() + " seconds");
+        mDistanceTravelledTextView.setText("Distance:" + String.format("%.2f",mRun.getDistance()) + " miles, Duration: " + mRun.getDuration() + " seconds");
         PlotPolylines();
 
         return thisView;
