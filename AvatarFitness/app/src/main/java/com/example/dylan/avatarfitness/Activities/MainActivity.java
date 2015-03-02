@@ -16,6 +16,7 @@ import com.example.dylan.avatarfitness.Fragments.HomeFragment;
 import com.example.dylan.avatarfitness.Fragments.MapFragment;
 import com.example.dylan.avatarfitness.Fragments.NavigationDrawerFragment;
 import com.example.dylan.avatarfitness.Fragments.StatisticsFragment;
+import com.example.dylan.avatarfitness.Fragments.ViewWorkoutsFragment;
 import com.example.dylan.avatarfitness.Fragments.WorkoutFragment;
 import com.example.dylan.avatarfitness.Managers.DatabaseManager;
 import com.example.dylan.avatarfitness.Objects.Run;
@@ -34,7 +35,8 @@ public class MainActivity extends ActionBarActivity
         WorkoutFragment.OnFragmentInteractionListener,
         MapFragment.OnFragmentInteractionListener,
         StatisticsFragment.OnFragmentInteractionListener,
-        AccountCreationFragment.OnFragmentInteractionListener {
+        AccountCreationFragment.OnFragmentInteractionListener,
+        ViewWorkoutsFragment.OnFragmentInteractionListener{
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
@@ -167,6 +169,15 @@ public class MainActivity extends ActionBarActivity
 
     public ArrayList<String> getExerciseTypeList(){
         return db.GetExerciseTypeList();
+    }
+
+    public void SwapFragmentToViewWorkouts(){
+        Fragment fragment;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragment = new ViewWorkoutsFragment();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
     }
 
     public ArrayList<String> GetExerciseDate(){

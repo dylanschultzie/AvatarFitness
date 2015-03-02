@@ -1,43 +1,42 @@
 package com.example.dylan.avatarfitness.Fragments;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.app.ListFragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.dylan.avatarfitness.R;
 
-import java.io.File;
-
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
+ * {@link StatisticsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
+ * Use the {@link StatisticsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class ViewWorkoutsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private ArrayAdapter<String> mRouteListAdapter;
 
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+    public static ViewWorkoutsFragment newInstance(String param1, String param2) {
+        ViewWorkoutsFragment fragment = new ViewWorkoutsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public HomeFragment() {
+    public ViewWorkoutsFragment() {
         // Required empty public constructor
     }
 
@@ -47,23 +46,19 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_page, container, false);
-        Button mViewWorkouts = (Button) view.findViewById(R.id.WorkoutButton);
+        View view = inflater.inflate(R.layout.fragment_statistics, container, false);
 
-        mViewWorkouts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.SwapFragmentToViewWorkouts();
-            }
-        });
+        mRouteListAdapter = new ArrayAdapter<>(view.getContext(),
+                android.R.layout.simple_list_item_1, mListener.GetExerciseDate() );
+        ListView listView = (ListView) view.findViewById(R.id.WorkoutHistoryListView);
+        listView.setAdapter(mRouteListAdapter);
+//        listView.setOnClickListener();
+
 
         return view;
     }
-
-
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -89,9 +84,19 @@ public class HomeFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
-        public void SwapFragmentToViewWorkouts();
+        public ArrayList<String> GetExerciseDate();
     }
 
 }
