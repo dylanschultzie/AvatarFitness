@@ -42,6 +42,8 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         Button mViewWorkouts = (Button) view.findViewById(R.id.WorkoutButton);
 
+        ImageView imageView = (ImageView) view.findViewById(R.id.AvatarImageHomePage);
+        imageView.setImageResource(R.drawable.stan_marsh);
         mViewWorkouts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
