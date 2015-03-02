@@ -84,7 +84,7 @@ public class ViewPreviousRunFragment extends Fragment implements LocationListene
         int mListLength = 0;
         SetLocation(mRun.getRoute().get(0));
         mMap.addMarker(new MarkerOptions().position(mRun.getRoute().get(mListLength++)).title("Start"));
-        while( mRun.getRoute().size() > mListLength){
+        while( mRun.getRoute().size() - 1 > mListLength){
             mMap.addPolyline(new PolylineOptions()
                     .add(mRun.getRoute().get(mListLength - 1), mRun.getRoute().get(mListLength))
                     .width(10)
