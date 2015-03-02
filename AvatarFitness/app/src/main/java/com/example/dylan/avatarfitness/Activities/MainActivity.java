@@ -16,6 +16,7 @@ import com.example.dylan.avatarfitness.Fragments.HomeFragment;
 import com.example.dylan.avatarfitness.Fragments.MapFragment;
 import com.example.dylan.avatarfitness.Fragments.NavigationDrawerFragment;
 import com.example.dylan.avatarfitness.Fragments.StatisticsFragment;
+import com.example.dylan.avatarfitness.Fragments.ViewPreviousRunFragment;
 import com.example.dylan.avatarfitness.Fragments.ViewWorkoutsFragment;
 import com.example.dylan.avatarfitness.Fragments.WorkoutFragment;
 import com.example.dylan.avatarfitness.Managers.DatabaseManager;
@@ -27,6 +28,7 @@ import com.example.dylan.avatarfitness.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity
@@ -36,13 +38,15 @@ public class MainActivity extends ActionBarActivity
         MapFragment.OnFragmentInteractionListener,
         StatisticsFragment.OnFragmentInteractionListener,
         AccountCreationFragment.OnFragmentInteractionListener,
-        ViewWorkoutsFragment.OnFragmentInteractionListener{
+        ViewWorkoutsFragment.OnFragmentInteractionListener,
+        ViewPreviousRunFragment.OnFragmentInteractionListener{
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
     private CharSequence mTitle;
     private User mUser;
     private DatabaseManager db = null;
+    private iWorkout mTemporaryObjectForPassingToFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,7 +152,6 @@ public class MainActivity extends ActionBarActivity
 
     }
 
-
     public Context GetContext(){
         return this.getBaseContext();
     }
@@ -198,7 +201,29 @@ public class MainActivity extends ActionBarActivity
         return returnedWorkout;
     }
 
+    public void SwapFragmentViewPreviousRun(Run run){
+        mTemporaryObjectForPassingToFragment = run;
+        Fragment fragment;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragment = new ViewPreviousRunFragment();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
+    }
+    public iWorkout GetSingularRun(){
+        return mTemporaryObjectForPassingToFragment;
+    }
 
+
+    public ArrayList<Run> GetRuns(){
+        ArrayList<Run> list = new ArrayList<>();
+        for(iWorkout workout : mUser.getWorkouts()){
+            if( workout.getDescription().equals("Run")){
+                list.add((Run)workout);
+            }
+        }
+        return list;
+    }
 
     private boolean isGooglePlayServicesAvailable() {
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);

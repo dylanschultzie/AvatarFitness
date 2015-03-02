@@ -21,6 +21,7 @@ import com.example.dylan.avatarfitness.Objects.iWorkout;
 import com.example.dylan.avatarfitness.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -74,19 +75,17 @@ public class ViewWorkoutsFragment extends Fragment {
                 workoutBase = mListener.GetWorkoutByExerciseDate(str_array[0],str_array[1]);
                 if( workoutBase.getDescription().equals("Run")){
                     run = (Run) workoutBase;
+                    mListener.SwapFragmentViewPreviousRun(run);
                 }
                 else{
                     work = (Workout) workoutBase;
-
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
                     builder.setTitle(selectedItem)
                             .setMessage("Weight: " + work.getWeight() + "lbs\n" +
                                         "Sets: " + work.getSets() + "\n" +
                                         "Reps: " + work.getReps() + "\n" +
                                         "Time to complete workout: " + work.getDuration() + " seconds")
                             .show();
-
                     AlertDialog dialog = builder.create();
                 }
                 //use dialog here!
@@ -118,20 +117,11 @@ public class ViewWorkoutsFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
         public ArrayList<String> GetExerciseDate();
         public iWorkout GetWorkoutByExerciseDate( String exercise, String date);
+        public void SwapFragmentViewPreviousRun(Run run);
     }
 
 }
