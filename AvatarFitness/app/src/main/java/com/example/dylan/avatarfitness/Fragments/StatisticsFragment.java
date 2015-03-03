@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.dylan.avatarfitness.Objects.Workout;
 import com.example.dylan.avatarfitness.Objects.iWorkout;
@@ -50,6 +51,8 @@ public class StatisticsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistics, container, false);
         final Spinner exerciseTypeSpinner = (Spinner) view.findViewById(R.id.ExerciseTypeSpinner);
+        final Spinner statTypeSpinner = (Spinner) view.findViewById(R.id.StatTypeSpinner);
+        final TextView statTypeTextView = (TextView) view.findViewById(R.id.StatTypeTextView);
         Button refreshButton = (Button) view.findViewById(R.id.RefreshButtonStatistics);
         final GraphView graph = (GraphView) view.findViewById(R.id.graph);
 
@@ -60,10 +63,21 @@ public class StatisticsFragment extends Fragment {
                 android.R.layout.simple_spinner_item, list);
         exerciseTypeSpinner.setAdapter(exerciseTypeAdapter);
 
+        //spinner for stat type
+        ArrayAdapter<String> statTypeAdapter = new ArrayAdapter<>(view.getContext(),
+                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.statType));
+        statTypeSpinner.setAdapter(statTypeAdapter);
+
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ArrayList<iWorkout> workoutList = mListener.GetExerciseDate(exerciseTypeSpinner.getSelectedItem().toString());
+                String statType = statTypeSpinner.getSelectedItem().toString();
+                int stat = mListener.GetStatByStringAndQualifier(exerciseTypeSpinner.getSelectedItem().toString(),
+                                                                 statTypeSpinner.getSelectedItem().toString());
+
+                statTypeTextView.setText(statType + ": " + stat);
+
                 DataPoint[] dataPoints = new DataPoint[workoutList.size()];
                 Workout temp = null;
                 int i = 0;
@@ -126,6 +140,7 @@ public class StatisticsFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
         public ArrayList<iWorkout> GetExerciseDate( String exerciseType );
         public ArrayList<String> getExerciseTypeList();
+        public int GetStatByStringAndQualifier( String exerciseType, String maxMin );
     }
 
 }

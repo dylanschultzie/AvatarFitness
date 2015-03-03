@@ -191,6 +191,11 @@ public class MainActivity extends ActionBarActivity
         return list;
     }
 
+    public int GetStatByStringAndQualifier( String exerciseType, String maxMin ){
+        return db.GetStatByStringAndQualifier( mUser, exerciseType, maxMin);
+    }
+
+
     public ArrayList<iWorkout> GetExerciseDate( String exerciseType ){
         ArrayList<iWorkout> list = new ArrayList<>();
         for( iWorkout workout: mUser.getWorkouts()){

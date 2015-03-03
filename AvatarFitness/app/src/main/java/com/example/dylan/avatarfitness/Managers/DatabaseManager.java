@@ -178,6 +178,29 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return user;
     }
 
+    public int GetStatByStringAndQualifier( User user, String exerciseType, String maxMin ){
+        int stat = 0;
+        SQLiteDatabase readDB = this.getReadableDatabase();
+        SQLiteDatabase writeDB = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.clear();
+
+        final String mQuery = "SELECT " + maxMin + "(" + DatabaseContract.Exercises.COLUMN_NAME_WEIGHT + ") " +
+                "FROM " + DatabaseContract.Exercises.TABLE_NAME +
+                " JOIN " + DatabaseContract.Workouts.TABLE_NAME + " ON " + DatabaseContract.Exercises.TABLE_NAME + "." + DatabaseContract.Exercises.COLUMN_NAME_WORKOUT_ID_FK +  " = " + DatabaseContract.Workouts.TABLE_NAME + "." + DatabaseContract.Workouts.COLUMN_NAME_WORKOUT_ID +
+                " JOIN " + DatabaseContract.Users.TABLE_NAME + " ON " + DatabaseContract.Workouts.TABLE_NAME + "." + DatabaseContract.Workouts.COLUMN_NAME_USER_ID_FK + " = " + DatabaseContract.Users.TABLE_NAME + "." + DatabaseContract.Users.COLUMN_NAME_USER_ID +
+                " WHERE " + DatabaseContract.Workouts.COLUMN_NAME_DESCRIPTION + " = '" + exerciseType + "' " +
+                "AND " + DatabaseContract.Users.TABLE_NAME + "." + DatabaseContract.Users.COLUMN_NAME_USER_ID + " = ?";
+
+
+        Cursor cur = readDB.rawQuery(mQuery, new String[]{String.valueOf(user.getUserID())});
+
+        if(cur.moveToNext()){
+            stat = cur.getInt(0);
+        }
+        return stat;
+    }
+
     public void InsertRunByUserID( User user, Run run ){
         SQLiteDatabase readDB = this.getReadableDatabase();
         SQLiteDatabase writeDB = this.getWritableDatabase();
