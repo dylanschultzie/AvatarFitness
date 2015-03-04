@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:screenOrientation="portrait"
-    android:background="@drawable/bg1">
+    android:background="@drawable/bg3">
 
     <!-- As the main content view, the view below consumes the entire
          space available using match_parent in both dimensions. -->

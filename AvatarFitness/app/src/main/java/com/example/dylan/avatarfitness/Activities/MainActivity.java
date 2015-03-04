@@ -118,6 +118,10 @@ public class MainActivity extends ActionBarActivity
         actionBar.setTitle(mTitle);
     }
 
+    public User GetUser(){
+        return mUser;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

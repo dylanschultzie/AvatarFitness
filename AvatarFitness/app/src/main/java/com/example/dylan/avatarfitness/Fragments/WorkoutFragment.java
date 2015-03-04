@@ -67,9 +67,11 @@ public class WorkoutFragment extends Fragment {
         final EditText workoutWeight = (EditText) thisView.findViewById(R.id.WeightEditText);
         final Button startTimer = (Button) thisView.findViewById(R.id.StartWorkoutButton);
 
+        ArrayList<String> list = CleanExerciseList(mListener.getExerciseTypeList());
+
         //auto complete for exercise type
         ArrayAdapter<String> exerciseTypeAdapter = new ArrayAdapter<String>(thisView.getContext(),
-                android.R.layout.simple_dropdown_item_1line, mListener.getExerciseTypeList());
+                android.R.layout.simple_dropdown_item_1line, list);
         exerciseTypeEditText.setAdapter(exerciseTypeAdapter);
 
         startTimer.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +109,16 @@ public class WorkoutFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    public ArrayList<String> CleanExerciseList( ArrayList<String> list ){
+        ArrayList<String> tempList = new ArrayList<>();
+        for(String string : list){
+            if(!tempList.contains(string)){
+                tempList.add(string);
+            }
+        }
+        return tempList;
     }
 
     @Override

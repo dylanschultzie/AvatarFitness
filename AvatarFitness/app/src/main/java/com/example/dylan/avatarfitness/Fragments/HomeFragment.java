@@ -11,7 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.example.dylan.avatarfitness.Objects.Run;
+import com.example.dylan.avatarfitness.Objects.User;
+import com.example.dylan.avatarfitness.Objects.Workout;
+import com.example.dylan.avatarfitness.Objects.iWorkout;
 import com.example.dylan.avatarfitness.R;
 
 import java.io.File;
@@ -19,6 +24,12 @@ import java.io.File;
 public class HomeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private User mUser;
+
+    private TextView mLatestExerciseTypeTextView;
+    private TextView mLatestDurationTextView;
+    private TextView mFeatTextView;
+    private TextView mSpeedDirectionTextView;
 
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
@@ -42,8 +53,18 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
         Button mViewWorkouts = (Button) view.findViewById(R.id.WorkoutButton);
 
+        mLatestExerciseTypeTextView = (TextView) view.findViewById(R.id.LatestExerciseTypeTextView);
+        mLatestDurationTextView = (TextView) view.findViewById(R.id.LatestDurationTextView);
+        mFeatTextView = (TextView) view.findViewById(R.id.FeatTextView);
+        mSpeedDirectionTextView = (TextView) view.findViewById(R.id.SpeedDirectionTextView);
+
+        mUser = mListener.GetUser();
+
+        PostLatestWorkout();
+
         ImageView imageView = (ImageView) view.findViewById(R.id.AvatarImageHomePage);
         imageView.setImageResource(R.drawable.stan_marsh);
+//        imageView.setImageResource(R.drawable.wendy_happy);
         mViewWorkouts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,8 +75,23 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-
-
+    public void PostLatestWorkout(){
+        iWorkout workout = mUser.getWorkouts().get(mUser.getWorkouts().size()-1);
+        if( workout.getDescription().equals("Run")){
+            Run run = (Run)workout;
+            mLatestExerciseTypeTextView.setText(run.getDescription());
+            mLatestDurationTextView.setText("Duration: " + String.valueOf(run.getDuration()) + " seconds");
+            mFeatTextView.setText("Distance: " + String.valueOf(run.getDistance()));
+            mSpeedDirectionTextView.setText(String.valueOf(run.getDistance() / run.getDuration()));
+        }
+        else{
+            Workout wOut = (Workout) workout;
+            mLatestExerciseTypeTextView.setText(wOut.getDescription());
+            mLatestDurationTextView.setText("Duration: " + String.valueOf(wOut.getDuration()) + " seconds");
+            mFeatTextView.setText("Weight: " + String.valueOf(wOut.getWeight()) + " lbs");
+            mSpeedDirectionTextView.setText("Reps: " + wOut.getReps() + ", Sets:" + wOut.getSets());
+        }
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -84,6 +120,7 @@ public class HomeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
         public void SwapFragmentToViewWorkouts();
+        public User GetUser();
     }
 
 }
