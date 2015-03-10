@@ -81,30 +81,42 @@ public class DatabaseManager extends SQLiteOpenHelper {
         SQLiteDatabase writeDB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.clear();
-        Cursor cur = readDB.query(DatabaseContract.Users.TABLE_NAME,
-                new String[] {DatabaseContract.Users.COLUMN_NAME_USER_ID},
-                DatabaseContract.Users.COLUMN_NAME_USER_NAME + " = '" + username + "' AND " +
-                DatabaseContract.Users.COLUMN_NAME_PASSWORD + " = '" + password + "'", null,
-                null, null, null);
+        Cursor cur = null;
+
+//        if(password.equals("")){
+//            cur = readDB.query(DatabaseContract.Users.TABLE_NAME,
+//                    new String[] {DatabaseContract.Users.COLUMN_NAME_USER_ID,
+//                            DatabaseContract.Users.COLUMN_NAME_GENDER},
+//                    DatabaseContract.Users.COLUMN_NAME_USER_NAME + " = '" + username + "'", null,
+//                    null, null, null);
+//        }
+//        else{
+            cur = readDB.query(DatabaseContract.Users.TABLE_NAME,
+                    new String[] {DatabaseContract.Users.COLUMN_NAME_USER_ID,
+                            DatabaseContract.Users.COLUMN_NAME_GENDER},
+                    DatabaseContract.Users.COLUMN_NAME_USER_NAME + " = '" + username + "' AND " +
+                            DatabaseContract.Users.COLUMN_NAME_PASSWORD + " = '" + password + "'", null,
+                    null, null, null);
+//        }
 
         User myUser = new User(0, username, password);
         if (cur.moveToFirst()){
                 myUser.setUserID(cur.getLong(0));
+                myUser.setGender(cur.getLong(1));
         }
         return myUser;
     }
 
     public User GetUserByID(long userID){
-//        TODO: delete this line!
-        userID = 1;
-
         SQLiteDatabase readDB = this.getReadableDatabase();
         SQLiteDatabase writeDB = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.clear();
 
         Cursor cur = readDB.query(DatabaseContract.Users.TABLE_NAME,
-                new String[] {DatabaseContract.Users.COLUMN_NAME_USER_NAME, DatabaseContract.Users.COLUMN_NAME_PASSWORD},
+                new String[] {DatabaseContract.Users.COLUMN_NAME_USER_NAME,
+                              DatabaseContract.Users.COLUMN_NAME_PASSWORD,
+                              DatabaseContract.Users.COLUMN_NAME_GENDER},
                 DatabaseContract.Users.COLUMN_NAME_USER_ID + " = '" + userID + "'", null,
                 null, null, null);
 
@@ -112,6 +124,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         if (cur.moveToFirst()){
             user.setUsername(cur.getString(0));
             user.setPassword(cur.getString(1));
+            user.setGender(cur.getLong(2));
 
             cur = readDB.query(DatabaseContract.Workouts.TABLE_NAME,
                     new String[] {DatabaseContract.Workouts.COLUMN_NAME_WORKOUT_ID,
@@ -261,6 +274,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(DatabaseContract.Users.COLUMN_NAME_USER_NAME, queryValues.getUsername());
         values.put(DatabaseContract.Users.COLUMN_NAME_PASSWORD, queryValues.getPassword());
+        values.put(DatabaseContract.Users.COLUMN_NAME_GENDER, queryValues.getGender());
         queryValues.setUserID(database.insert(DatabaseContract.Users.TABLE_NAME, null, values));
         database.close();
         return queryValues;

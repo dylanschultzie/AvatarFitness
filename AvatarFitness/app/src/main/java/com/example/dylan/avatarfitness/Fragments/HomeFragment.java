@@ -30,6 +30,7 @@ public class HomeFragment extends Fragment {
     private TextView mLatestDurationTextView;
     private TextView mFeatTextView;
     private TextView mSpeedDirectionTextView;
+    private TextView mGreetingsTextView;
 
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
@@ -57,14 +58,24 @@ public class HomeFragment extends Fragment {
         mLatestDurationTextView = (TextView) view.findViewById(R.id.LatestDurationTextView);
         mFeatTextView = (TextView) view.findViewById(R.id.FeatTextView);
         mSpeedDirectionTextView = (TextView) view.findViewById(R.id.SpeedDirectionTextView);
+        mGreetingsTextView = (TextView) view.findViewById(R.id.GreetingTextView);
 
         mUser = mListener.GetUser();
 
-        PostLatestWorkout();
+        mGreetingsTextView.setText("Hello, " + mUser.getUsername());
+
+        if( mUser.getWorkouts().size() > 0)
+            PostLatestWorkout();
 
         ImageView imageView = (ImageView) view.findViewById(R.id.AvatarImageHomePage);
-        imageView.setImageResource(R.drawable.stan_marsh);
-//        imageView.setImageResource(R.drawable.wendy_happy);
+        switch((int)mUser.getGender()){
+            case 0:
+                imageView.setImageResource(R.drawable.stan_marsh);
+                break;
+            case 1:
+                imageView.setImageResource(R.drawable.wendy_happy);
+                break;
+        }
         mViewWorkouts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

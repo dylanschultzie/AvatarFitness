@@ -315,14 +315,13 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         };
 
         int ADDRESS = 0;
-        int IS_PRIMARY = 1;
     }
 
 
     private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(LoginActivity.this,
+                new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
         mEmailView.setAdapter(adapter);
@@ -334,6 +333,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
+        final CharSequence myList[] = { "Male", "Female" };
         private final String mEmail;
         private final String mPassword;
         private final Context mContext;
@@ -362,6 +362,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
+
 
             if (success) {
                 if (mUser.getUserID()>0){
@@ -400,8 +401,23 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                     };
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(this.mContext);
-                    builder.setMessage(R.string.confirm_registry).setPositiveButton(R.string.yes, dialogClickListener)
-                            .setNegativeButton(R.string.no, dialogClickListener).show();
+                    builder.setTitle("User not found.")
+//                           .setMessage(R.string.confirm_registry)
+                           .setSingleChoiceItems( myList, -1, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch(which){
+                                        case 0:
+                                            mUser.setGender(which);
+                                            break;
+                                        case 1:
+                                            mUser.setGender(which);
+                                            break;
+                                    }
+                                }
+                            })
+                           .setPositiveButton(R.string.create_account, dialogClickListener)
+                           .setNegativeButton(R.string.no, dialogClickListener).show();
                 }
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

@@ -63,4 +63,13 @@
         android:layout_below="@+id/FeatTextView"
         android:layout_alignParentStart="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Hello, "
+        android:id="@+id/GreetingTextView"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/AvatarImageHomePage" />
+
 </RelativeLayout>

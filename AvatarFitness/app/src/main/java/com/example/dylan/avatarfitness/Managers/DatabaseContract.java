@@ -28,7 +28,7 @@ public final class DatabaseContract implements BaseColumns {
         public static final String COLUMN_NAME_USER_ID = "UserID";
         public static final String COLUMN_NAME_USER_NAME = "UserName";
         public static final String COLUMN_NAME_PASSWORD = "Password";
-        public static final String COLUMN_NAME_AVATAR_SEX = "AvatarSex";
+        public static final String COLUMN_NAME_GENDER = "Gender";
     }
 
     public static abstract class Workouts implements BaseColumns{
@@ -70,7 +70,7 @@ public final class DatabaseContract implements BaseColumns {
                     Users.COLUMN_NAME_USER_ID + INTEGER_TYPE + PRIMARY_KEY_CON + COMMA_SEP +
                     Users.COLUMN_NAME_USER_NAME + TEXT_TYPE + COMMA_SEP +
                     Users.COLUMN_NAME_PASSWORD + TEXT_TYPE + COMMA_SEP +
-                    Users.COLUMN_NAME_AVATAR_SEX + INTEGER_TYPE + ")";
+                    Users.COLUMN_NAME_GENDER + INTEGER_TYPE + ")";
 
     public static final String SQL_CREATE_WORKOUTS_TABLE =
             "CREATE TABLE " + Workouts.TABLE_NAME + " (" +

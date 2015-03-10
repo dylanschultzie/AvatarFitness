@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class User {
     private long mUserID;
+    private long mGender;
     private String mUsername;
     private String mPassword;
     private Avatar mAvatar;
@@ -22,6 +23,8 @@ public class User {
         mPassword = password;
         mWorkouts = new ArrayList<>();
     }
+    public long getGender() {return mGender;}
+    public void setGender(long mGender) {this.mGender = mGender;}
     public ArrayList<iWorkout> getWorkouts() {
         return mWorkouts;
     }
