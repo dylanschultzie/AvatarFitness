@@ -73,19 +73,21 @@ public class MapFragment extends Fragment implements LocationListener {
         mRunActive = false;
 
 
-        //Setting up Google Map
-        mContext = mListener.GetContext();
-        SupportMapFragment mSupportMapFragment = ((SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.map));
-        mMap = mSupportMapFragment.getMap();
-        mMap.setMyLocationEnabled(true);
-        mLocationManager = (LocationManager) mContext.getSystemService(mContext.LOCATION_SERVICE);
-        mCriteria = new Criteria();
-        mBestProvider = mLocationManager.getBestProvider(mCriteria, true);
-        mLocation = mLocationManager.getLastKnownLocation(mBestProvider);
+        try {
+            //Setting up Google Map
+            mContext = mListener.GetContext();
+            SupportMapFragment mSupportMapFragment = ((SupportMapFragment) getChildFragmentManager()
+                    .findFragmentById(R.id.map));
+            mMap = mSupportMapFragment.getMap();
+            mMap.setMyLocationEnabled(true);
+            mLocationManager = (LocationManager) mContext.getSystemService(mContext.LOCATION_SERVICE);
+            mCriteria = new Criteria();
+            mBestProvider = mLocationManager.getBestProvider(mCriteria, true);
+            mLocation = mLocationManager.getLastKnownLocation(mBestProvider);
 
-        SetLocation();
-
+            SetLocation();
+        }
+        catch( Exception e){}
         mStartButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {

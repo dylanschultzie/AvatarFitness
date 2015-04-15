@@ -58,38 +58,41 @@ public class ViewWorkoutsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_workouts, container, false);
 
-        mRouteListAdapter = new ArrayAdapter<>(view.getContext(),
-                android.R.layout.simple_list_item_1, mListener.GetExerciseDate() );
-        ListView listView = (ListView) view.findViewById(R.id.WorkoutHistoryListView);
-        listView.setAdapter(mRouteListAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                iWorkout workoutBase = null;
-                Run run = null;
-                Workout work = null;
-                TextView textView = (TextView) view;
-                String selectedItem = textView.getText().toString();
+        try {
+            mRouteListAdapter = new ArrayAdapter<>(view.getContext(),
+                    android.R.layout.simple_list_item_1, mListener.GetExerciseDate());
+            ListView listView = (ListView) view.findViewById(R.id.WorkoutHistoryListView);
+            listView.setAdapter(mRouteListAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    iWorkout workoutBase = null;
+                    Run run = null;
+                    Workout work = null;
+                    TextView textView = (TextView) view;
+                    String selectedItem = textView.getText().toString();
 
-                String[] str_array = selectedItem.split(", ");
-                workoutBase = mListener.GetWorkoutByExerciseDate(str_array[0],str_array[1]);
-                if( workoutBase.getDescription().equals("Run")){
-                    run = (Run) workoutBase;
-                    mListener.SwapFragmentViewPreviousRun(run);
-                }
-                else{
-                    work = (Workout) workoutBase;
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle(selectedItem)
-                            .setMessage("Weight: " + work.getWeight() + "lbs\n" +
+                    String[] str_array = selectedItem.split(", ");
+                    workoutBase = mListener.GetWorkoutByExerciseDate(str_array[0], str_array[1]);
+                    if (workoutBase.getDescription().equals("Run")) {
+                        run = (Run) workoutBase;
+                        mListener.SwapFragmentViewPreviousRun(run);
+                    } else {
+                        work = (Workout) workoutBase;
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle(selectedItem)
+                                .setMessage("Weight: " + work.getWeight() + "lbs\n" +
                                         "Sets: " + work.getSets() + "\n" +
                                         "Reps: " + work.getReps() + "\n" +
                                         "Time to complete workout: " + work.getDuration() + " seconds")
-                            .show();
-                    AlertDialog dialog = builder.create();
+                                .show();
+                        AlertDialog dialog = builder.create();
+                    }
+                    //use dialog here!
                 }
-                //use dialog here!
-            }});
+            });
+        }
+        catch(Exception e){}
         return view;
     }
 

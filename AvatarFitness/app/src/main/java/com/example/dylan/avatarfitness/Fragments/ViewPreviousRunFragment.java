@@ -57,20 +57,23 @@ public class ViewPreviousRunFragment extends Fragment implements LocationListene
         View thisView = inflater.inflate(R.layout.fragment_view_previous_run, container, false);
         TextView mDistanceTravelledTextView = (TextView) thisView.findViewById(R.id.PreviousDistanceTextView);
 
-        mRun = (Run)mListener.GetSingularRun();
+        try {
+            mRun = (Run) mListener.GetSingularRun();
 
-        //Setting up Google Map
-        mContext = mListener.GetContext();
-        SupportMapFragment mSupportMapFragment = ((SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.PreviousMap));
-        mMap = mSupportMapFragment.getMap();
-        mMap.setMyLocationEnabled(true);
-        mLocationManager = (LocationManager) mContext.getSystemService(mContext.LOCATION_SERVICE);
-        mCriteria = new Criteria();
-        mBestProvider = mLocationManager.getBestProvider(mCriteria, true);
-        mLocation = mLocationManager.getLastKnownLocation(mBestProvider);
-        mDistanceTravelledTextView.setText("Distance:" + String.format("%.2f",mRun.getDistance()) + " miles, Duration: " + mRun.getDuration() + " seconds");
-        PlotPolylines();
+            //Setting up Google Map
+            mContext = mListener.GetContext();
+            SupportMapFragment mSupportMapFragment = ((SupportMapFragment) getChildFragmentManager()
+                    .findFragmentById(R.id.PreviousMap));
+            mMap = mSupportMapFragment.getMap();
+            mMap.setMyLocationEnabled(true);
+            mLocationManager = (LocationManager) mContext.getSystemService(mContext.LOCATION_SERVICE);
+            mCriteria = new Criteria();
+            mBestProvider = mLocationManager.getBestProvider(mCriteria, true);
+            mLocation = mLocationManager.getLastKnownLocation(mBestProvider);
+            mDistanceTravelledTextView.setText("Distance:" + String.format("%.2f", mRun.getDistance()) + " miles, Duration: " + mRun.getDuration() + " seconds");
+            PlotPolylines();
+        }
+        catch(Exception e){}
 
         return thisView;
     }

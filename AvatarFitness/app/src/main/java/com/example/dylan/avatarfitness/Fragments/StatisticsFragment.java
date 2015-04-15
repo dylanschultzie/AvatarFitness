@@ -50,54 +50,57 @@ public class StatisticsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_statistics, container, false);
-        final Spinner exerciseTypeSpinner = (Spinner) view.findViewById(R.id.ExerciseTypeSpinner);
-        final Spinner statTypeSpinner = (Spinner) view.findViewById(R.id.StatTypeSpinner);
-        final TextView statTypeTextView = (TextView) view.findViewById(R.id.StatTypeTextView);
-        Button refreshButton = (Button) view.findViewById(R.id.RefreshButtonStatistics);
-        final GraphView graph = (GraphView) view.findViewById(R.id.graph);
+        try {
+            final Spinner exerciseTypeSpinner = (Spinner) view.findViewById(R.id.ExerciseTypeSpinner);
+            final Spinner statTypeSpinner = (Spinner) view.findViewById(R.id.StatTypeSpinner);
+            final TextView statTypeTextView = (TextView) view.findViewById(R.id.StatTypeTextView);
+            Button refreshButton = (Button) view.findViewById(R.id.RefreshButtonStatistics);
+            final GraphView graph = (GraphView) view.findViewById(R.id.graph);
 
-        ArrayList<String> list = CleanExerciseList(mListener.getExerciseTypeList());
+            ArrayList<String> list = CleanExerciseList(mListener.getExerciseTypeList());
 
-        //spinner for exercise type
-        ArrayAdapter<String> exerciseTypeAdapter = new ArrayAdapter<>(view.getContext(),
-                android.R.layout.simple_spinner_item, list);
-        exerciseTypeSpinner.setAdapter(exerciseTypeAdapter);
+            //spinner for exercise type
+            ArrayAdapter<String> exerciseTypeAdapter = new ArrayAdapter<>(view.getContext(),
+                    android.R.layout.simple_spinner_item, list);
+            exerciseTypeSpinner.setAdapter(exerciseTypeAdapter);
 
-        //spinner for stat type
-        ArrayAdapter<String> statTypeAdapter = new ArrayAdapter<>(view.getContext(),
-                android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.statType));
-        statTypeSpinner.setAdapter(statTypeAdapter);
+            //spinner for stat type
+            ArrayAdapter<String> statTypeAdapter = new ArrayAdapter<>(view.getContext(),
+                    android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.statType));
+            statTypeSpinner.setAdapter(statTypeAdapter);
 
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ArrayList<iWorkout> workoutList = mListener.GetExerciseDate(exerciseTypeSpinner.getSelectedItem().toString());
-                String statType = statTypeSpinner.getSelectedItem().toString();
-                int stat = mListener.GetStatByStringAndQualifier(exerciseTypeSpinner.getSelectedItem().toString(),
-                                                                 statTypeSpinner.getSelectedItem().toString());
+            refreshButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ArrayList<iWorkout> workoutList = mListener.GetExerciseDate(exerciseTypeSpinner.getSelectedItem().toString());
+                    String statType = statTypeSpinner.getSelectedItem().toString();
+                    int stat = mListener.GetStatByStringAndQualifier(exerciseTypeSpinner.getSelectedItem().toString(),
+                            statTypeSpinner.getSelectedItem().toString());
 
-                statTypeTextView.setText(statType + ": " + stat);
+                    statTypeTextView.setText(statType + ": " + stat);
 
-                DataPoint[] dataPoints = new DataPoint[workoutList.size()];
-                Workout temp = null;
-                int i = 0;
-                for( iWorkout workout : workoutList){
-                    temp = (Workout)workout;
-                    dataPoints[i++] = new DataPoint(temp.getDate(),temp.getWeight());
+                    DataPoint[] dataPoints = new DataPoint[workoutList.size()];
+                    Workout temp = null;
+                    int i = 0;
+                    for (iWorkout workout : workoutList) {
+                        temp = (Workout) workout;
+                        dataPoints[i++] = new DataPoint(temp.getDate(), temp.getWeight());
+                    }
+                    LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
+                    graph.addSeries(series);
+
+                    // set date label formatter
+                    graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
+                    graph.getGridLabelRenderer().setNumHorizontalLabels(5); // only 4 because of the space
+
+                    // set manual x bounds to have nice steps
+                    graph.getViewport().setMinX(dataPoints[0].getX());
+                    graph.getViewport().setMaxX(dataPoints[workoutList.size() - 1].getX());
+                    graph.getViewport().setXAxisBoundsManual(true);
                 }
-                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(dataPoints);
-                graph.addSeries(series);
-
-                // set date label formatter
-                graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getActivity()));
-                graph.getGridLabelRenderer().setNumHorizontalLabels(5); // only 4 because of the space
-
-                // set manual x bounds to have nice steps
-                graph.getViewport().setMinX(dataPoints[0].getX());
-                graph.getViewport().setMaxX(dataPoints[workoutList.size()-1].getX());
-                graph.getViewport().setXAxisBoundsManual(true);
-            }
-        });
+            });
+        }
+        catch(Exception e){}
 
         return view;
     }

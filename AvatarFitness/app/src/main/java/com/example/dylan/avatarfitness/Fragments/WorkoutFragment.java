@@ -67,40 +67,42 @@ public class WorkoutFragment extends Fragment {
         final EditText workoutWeight = (EditText) thisView.findViewById(R.id.WeightEditText);
         final Button startTimer = (Button) thisView.findViewById(R.id.StartWorkoutButton);
 
-        ArrayList<String> list = CleanExerciseList(mListener.getExerciseTypeList());
+        try {
 
-        //auto complete for exercise type
-        ArrayAdapter<String> exerciseTypeAdapter = new ArrayAdapter<String>(thisView.getContext(),
-                android.R.layout.simple_dropdown_item_1line, list);
-        exerciseTypeEditText.setAdapter(exerciseTypeAdapter);
+            ArrayList<String> list = CleanExerciseList(mListener.getExerciseTypeList());
 
-        startTimer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                if( !mRunningChrono ){
-                    mRunningChrono = true;
-                    mElapsedChrono.setBase(SystemClock.elapsedRealtime());
-                    mElapsedChrono.start();
-                    startTimer.setText("Stop Workout");
+            //auto complete for exercise type
+            ArrayAdapter<String> exerciseTypeAdapter = new ArrayAdapter<String>(thisView.getContext(),
+                    android.R.layout.simple_dropdown_item_1line, list);
+            exerciseTypeEditText.setAdapter(exerciseTypeAdapter);
+
+            startTimer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!mRunningChrono) {
+                        mRunningChrono = true;
+                        mElapsedChrono.setBase(SystemClock.elapsedRealtime());
+                        mElapsedChrono.start();
+                        startTimer.setText("Stop Workout");
+                    } else {
+                        mRunningChrono = false;
+                        mElapsedChrono.stop();
+                        mElapsedMillis = SystemClock.elapsedRealtime() - mElapsedChrono.getBase();
+                        mElapsedMillis /= 1000;
+                        mListener.SaveWorkout(new Workout(Integer.parseInt(workoutSets.getText().toString()),
+                                        Integer.parseInt(workoutReps.getText().toString()),
+                                        exerciseTypeEditText.getText().toString(),
+                                        mElapsedMillis,
+                                        new Date(),
+                                        Integer.parseInt(workoutWeight.getText().toString())),
+                                1);
+                        startTimer.setText("Start Workout");
+                    }
                 }
-                else{
-                    mRunningChrono = false;
-                    mElapsedChrono.stop();
-                    mElapsedMillis = SystemClock.elapsedRealtime() - mElapsedChrono.getBase();
-                    mElapsedMillis /= 1000;
-                    mListener.SaveWorkout( new Workout( Integer.parseInt(workoutSets.getText().toString()),
-                                                        Integer.parseInt(workoutReps.getText().toString()),
-                                                        exerciseTypeEditText.getText().toString(),
-                                                        mElapsedMillis,
-                                                        new Date(),
-                                                        Integer.parseInt(workoutWeight.getText().toString())),
-                                            1);
-                    startTimer.setText("Start Workout");
-                }
-            }
-        });
-        mElapsedChrono = (Chronometer) thisView.findViewById(R.id.WorkoutLengthChrono);
+            });
+            mElapsedChrono = (Chronometer) thisView.findViewById(R.id.WorkoutLengthChrono);
+        }
+        catch(Exception e){}
         return thisView;
     }
 
