@@ -1,8 +1,15 @@
+/**@author: Dylan Schultz
+ * Date Created: 2/10/2015
+ * Date Last Revised: 7/14/2015
+ *
+ * Purpose:
+ *      This simply displays different stats to the home screen. It does not calculations, it's
+ *      purely a GUI fragment.
+ *
+ */
 package com.example.dylan.avatarfitness.Fragments;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,8 +25,6 @@ import com.example.dylan.avatarfitness.Objects.User;
 import com.example.dylan.avatarfitness.Objects.Workout;
 import com.example.dylan.avatarfitness.Objects.iWorkout;
 import com.example.dylan.avatarfitness.R;
-
-import java.io.File;
 
 public class HomeFragment extends Fragment {
 
@@ -104,7 +109,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -129,9 +133,9 @@ public class HomeFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
-        public void SwapFragmentToViewWorkouts();
-        public User GetUser();
+        void onFragmentInteraction(Uri uri);
+        void SwapFragmentToViewWorkouts();
+        User GetUser();
     }
 
 }

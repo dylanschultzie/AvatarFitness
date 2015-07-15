@@ -1,3 +1,12 @@
+/**@author: Dylan Schultz
+ * Date Created: 2/27/2015
+ * Date Last Revised: 7/14/2015
+ *
+ * Purpose:
+ *      This is something of a parent class to the other workout classes. It starts them up,
+ *      such as choosing what workout to do.
+ *
+ */
 package com.example.dylan.avatarfitness.Fragments;
 
 import android.app.Activity;
@@ -13,7 +22,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.example.dylan.avatarfitness.Objects.Workout;
 import com.example.dylan.avatarfitness.Objects.iWorkout;
@@ -106,7 +114,6 @@ public class WorkoutFragment extends Fragment {
         return thisView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -151,10 +158,9 @@ public class WorkoutFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-        public void SaveWorkout( iWorkout workout, int workoutType );
-        public ArrayList<String> getExerciseTypeList();
+        void onFragmentInteraction(Uri uri);
+        void SaveWorkout( iWorkout workout, int workoutType );
+        ArrayList<String> getExerciseTypeList();
     }
 
 }

@@ -1,3 +1,10 @@
+/*
+ * @author: Dylan Schultz
+ * Purpose:
+ *      Acts much as C++ "main" where all fragments are based from. This includes functionality that
+ *      goes through the database.
+ */
+
 package com.example.dylan.avatarfitness.Activities;
 
 import android.content.Context;
@@ -28,7 +35,6 @@ import com.example.dylan.avatarfitness.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity
@@ -204,7 +210,7 @@ public class MainActivity extends ActionBarActivity
         ArrayList<iWorkout> list = new ArrayList<>();
         for( iWorkout workout: mUser.getWorkouts()){
             if( workout.getDescription().equals(exerciseType))
-            list.add(workout);
+                list.add(workout);
         }
         return list;
     }

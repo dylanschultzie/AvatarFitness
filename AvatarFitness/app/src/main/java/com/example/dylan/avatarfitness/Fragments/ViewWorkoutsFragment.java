@@ -2,8 +2,6 @@ package com.example.dylan.avatarfitness.Fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ListFragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +19,6 @@ import com.example.dylan.avatarfitness.Objects.iWorkout;
 import com.example.dylan.avatarfitness.R;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -122,9 +119,12 @@ public class ViewWorkoutsFragment extends Fragment {
 
     public interface OnFragmentInteractionListener {
         public void onFragmentInteraction(Uri uri);
+
+
         public ArrayList<String> GetExerciseDate();
+
+
         public iWorkout GetWorkoutByExerciseDate( String exercise, String date);
         public void SwapFragmentViewPreviousRun(Run run);
     }
-
 }

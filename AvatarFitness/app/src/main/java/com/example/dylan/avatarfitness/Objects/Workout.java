@@ -2,8 +2,13 @@ package com.example.dylan.avatarfitness.Objects;
 
 import java.util.Date;
 
-/**
- * Created by Dylan on 2/19/2015.
+/**@author Dylan Schultz
+ * Date Created: 2/19/2015
+ * Date Last Revised: 7/14/2015
+ *
+ * Purpose:
+ *      Much like Run class, contains the data within each exercise, such as bench press.
+ *
  */
 public class Workout implements iWorkout {
     protected float mDuration;
@@ -81,8 +86,4 @@ public class Workout implements iWorkout {
         this.mDate = mDate;
     }
 
-    @Override
-    public void LogWorkout() {
-
-    }
 }

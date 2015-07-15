@@ -2,8 +2,14 @@ package com.example.dylan.avatarfitness.Objects;
 
 import java.util.ArrayList;
 
-/**
- * Created by Dylan on 2/16/2015.
+/**@author Dylan Schultz
+ * Date Created: 2/16/2015
+ * Date Last Revised: 7/14/2015
+ *
+ * Purpose:
+ *      Maintains User information. mAvatar is a placeholder for future implementation of Avatar
+ *      class.
+ *
  */
 public class User {
     private long mUserID;

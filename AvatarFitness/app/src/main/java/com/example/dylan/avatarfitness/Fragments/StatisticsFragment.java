@@ -1,7 +1,14 @@
+/**@author: Dylan Schultz
+ * Date Created: 2/10/2015
+ * Date Last Revised: 7/14/2015
+ *
+ * Purpose:
+ *      This holds the functionality behind logging exercises (such as "Bench Press" - NOT cardio!)
+ *
+ */
 package com.example.dylan.avatarfitness.Fragments;
 
 import android.app.Activity;
-import android.app.ListFragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,13 +29,10 @@ import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class StatisticsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
-    private ArrayAdapter<String> mRouteListAdapter;
 
-    // TODO: Rename and change types and number of parameters
     public static StatisticsFragment newInstance(String param1, String param2) {
         StatisticsFragment fragment = new StatisticsFragment();
         Bundle args = new Bundle();
@@ -80,7 +83,7 @@ public class StatisticsFragment extends Fragment {
                     statTypeTextView.setText(statType + ": " + stat);
 
                     DataPoint[] dataPoints = new DataPoint[workoutList.size()];
-                    Workout temp = null;
+                    Workout temp;
                     int i = 0;
                     for (iWorkout workout : workoutList) {
                         temp = (Workout) workout;
@@ -115,7 +118,6 @@ public class StatisticsFragment extends Fragment {
         return tempList;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -140,10 +142,10 @@ public class StatisticsFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
-        public ArrayList<iWorkout> GetExerciseDate( String exerciseType );
-        public ArrayList<String> getExerciseTypeList();
-        public int GetStatByStringAndQualifier( String exerciseType, String maxMin );
+        void onFragmentInteraction(Uri uri);
+        ArrayList<iWorkout> GetExerciseDate( String exerciseType );
+        ArrayList<String> getExerciseTypeList();
+        int GetStatByStringAndQualifier( String exerciseType, String maxMin );
     }
 
 }

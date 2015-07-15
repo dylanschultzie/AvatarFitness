@@ -173,12 +173,12 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
+        //not too concerned for testing purposes
         return true;
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
+        //not too concerned for testing purposes
         return true;
     }
 
@@ -264,8 +264,7 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
     }
 
     /**
-     * Check if the device supports Google Play Services.  It's best
-     * practice to check first rather than handling this as an error case.
+     * Check if the device supports Google Play Services.
      *
      * @return whether the device supports Google Play Services
      */
@@ -403,10 +402,10 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                     AlertDialog.Builder builder = new AlertDialog.Builder(this.mContext);
                     builder.setTitle("User not found.")
 //                           .setMessage(R.string.confirm_registry)
-                           .setSingleChoiceItems( myList, -1, new DialogInterface.OnClickListener() {
+                            .setSingleChoiceItems(myList, -1, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    switch(which){
+                                    switch (which) {
                                         case 0:
                                             mUser.setGender(which);
                                             break;
@@ -416,8 +415,8 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                                     }
                                 }
                             })
-                           .setPositiveButton(R.string.create_account, dialogClickListener)
-                           .setNegativeButton(R.string.no, dialogClickListener).show();
+                            .setPositiveButton(R.string.create_account, dialogClickListener)
+                            .setNegativeButton(R.string.no, dialogClickListener).show();
                 }
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

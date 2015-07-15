@@ -63,6 +63,7 @@ public class MapFragment extends Fragment implements LocationListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View thisView = inflater.inflate(R.layout.fragment_map, container, false);
+
         mLocationTextView = (TextView) thisView.findViewById(R.id.latlongLocation);
         mDistanceTravelledTextView = (TextView) thisView.findViewById(R.id.distanceTextView);
         mStartButton = (Button) thisView.findViewById(R.id.StartMapsButton);
@@ -84,7 +85,6 @@ public class MapFragment extends Fragment implements LocationListener {
             mCriteria = new Criteria();
             mBestProvider = mLocationManager.getBestProvider(mCriteria, true);
             mLocation = mLocationManager.getLastKnownLocation(mBestProvider);
-
             SetLocation();
         }
         catch( Exception e){}

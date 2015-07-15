@@ -1,7 +1,12 @@
 package com.example.dylan.avatarfitness.Objects;
 
-/**
- * Created by Dylan on 2/19/2015.
+/**@author Dylan Schultz
+ * Date Created: 2/22/2015
+ * Date Last Revised:
+ *
+ * Purpose:
+ *      Intended to represent the "avatar" (display picture) of the user.
+ *
  */
 public class Avatar {
 }

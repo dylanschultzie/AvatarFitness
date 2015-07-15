@@ -2,26 +2,24 @@ package com.example.dylan.avatarfitness.Managers;
 
 import android.provider.BaseColumns;
 
-import com.example.dylan.avatarfitness.Objects.Workout;
-
 /**
- * Created by Dylan on 2/22/2015.
+ * @author Dylan Schultz
+ * Date Created: 2/22/2015
+ * Date Last Edited: 7/14/2015
+ * Purpose:
+ *      Much like SQLAlchemy, this is used to make database interaction easier to read/understand.
  */
 public final class DatabaseContract implements BaseColumns {
-    public DatabaseContract(){
-
-    }
+    public DatabaseContract(){    }
 
     private static final String	TEXT_TYPE = " TEXT";
     private static final String	INTEGER_TYPE = " INTEGER";
     private static final String	REAL_TYPE = " REAL";
-    private static final String	NUMERIC_TYPE = " NUMERIC";
     private static final String	COMMA_SEP = ", ";
 
     private static final String	PRIMARY_KEY_CON = " PRIMARY KEY AUTOINCREMENT";
     private static final String FOREIGN_KEY_CON = " FOREIGN KEY";
     private static final String REFERENCE_CON = " REFERENCES ";
-    private static final String	NOT_NULL_CON = " NOT NULL";
 
     public static abstract class Users implements BaseColumns{
         public static final String TABLE_NAME = "Users";

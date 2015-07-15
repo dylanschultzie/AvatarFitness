@@ -5,8 +5,13 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by Dylan on 2/22/2015.
+/**@author Dylan Schultz
+ * Date Created: 2/22/2015
+ * Date Last Revised: 7/14/2015
+ *
+ *Purpose:
+ *      Cardio workouts are logged through this. Such a terrible choice in name.
+ *
  */
 public class Run implements iWorkout {
     protected float mDuration;
@@ -38,11 +43,6 @@ public class Run implements iWorkout {
     }
     public float getDistance(){
         return mDistance;
-    }
-
-    @Override
-    public void LogWorkout() {
-
     }
 
     @Override
